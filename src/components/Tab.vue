@@ -12,6 +12,10 @@
         <img slot="icon" src="../assets/all.png">
         <span slot="label">项目</span>
       </tabbar-item>
+      <tabbar-item>
+        <img slot="icon" src="../assets/add.png">
+        <span slot="label">发布任务</span>
+      </tabbar-item>
       <tabbar-item link="/index/chat">
         <img slot="icon" src="../assets/atm.png">
         <span slot="label">消息</span>
