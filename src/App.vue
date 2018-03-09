@@ -30,10 +30,7 @@ input::-webkit-input-placeholder{
   text-align: right;
   color: #999999;
 }
-select::-webkit-input-placeholder{
-  text-align: right;
-  color: #999999;
-}
+
 
 //项目页面的图标下边距
 .Project{
