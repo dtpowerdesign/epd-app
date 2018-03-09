@@ -15,16 +15,33 @@
         <i class="iconfont icon-jiantou"></i>
       </span>
     </div>
-    <group-title>个人信息</group-title>
+    <!-- <group-title>个人信息</group-title>
     <group>
       <cell title="注册信息">
         <i slot="icon" class="iconfont icon-jifen"></i>
       </cell>
-    </group>
-    <group-title>账户安全</group-title>
-    <group>
-      <cell title="Test">
-        <i slot="icon" class="iconfont icon-jifen"></i>
+    </group> -->
+    <!-- <group-title>账户安全</group-title> -->
+    <group class="profile-lists">
+      <cell title="我的资质">
+        &gt;
+        <i slot="icon" class="iconfont icon-zizhi" style="color:#E03636;"></i>
+      </cell>
+      <cell title="服务评价">
+        &gt;
+        <i slot="icon" class="iconfont icon-iconfontevaluate" style="color:#EDD0BE;"></i>
+      </cell>
+      <cell title="我感兴趣的">
+        &gt;
+        <i slot="icon" class="iconfont icon-shoucang" style="color:#FF534D;"></i>
+      </cell>
+      <cell title="建议反馈">
+        &gt;
+        <i slot="icon" class="iconfont icon-fankuilast" style="color:#EDD0BE;"></i>
+      </cell>
+      <cell title="使用帮助">
+        &gt;
+        <i slot="icon" class="iconfont icon-bangzhu" style="color:#25C6FC;"></i>
       </cell>
     </group>
   </div>
@@ -93,6 +110,9 @@ img {
 .arrow i {
   color: #fff;
   font-size: 2em;
+}
+.profile-lists i {
+  margin-right: 10px;
 }
 </style>
 
