@@ -1,52 +1,65 @@
 <template>
-  <div>
+  <div class="Project">
     <x-header title="管理" :left-options="{showBack: false}"></x-header>
     <group-title>项目管理</group-title>
     <grid :cols="Cols">
       <grid-item label="个人业绩">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-yejiguanli" slot="icon"></i>
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="发布新项目">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-fabu" slot="icon"></i>
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="联合体">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-woshou" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
     </grid>
     <group-title>项目信息</group-title>
     <grid :cols="Cols">
       <grid-item label="项目汇总">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-jiankangjianchajieguohuizong" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="发布中">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-carry-out" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="投标中">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-toubiao" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="洽谈中">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-talkconversation" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="中标洽谈">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-zhaopinqiatan" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="执行中">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-jinxingzhong" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="合同中止">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-zhongzhi" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
     </grid>
     <group-title>统计信息</group-title>
     <grid :cols="Cols">
       <grid-item label="时间统计">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-shijian" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="洽谈统计">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-jishuhezuoqiatanhezuohuitan" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
       <grid-item label="资信统计">
-        <img slot="icon" src="../../assets/all.png">
+        <i class="icon iconfont icon-1" slot="icon"></i>        
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
     </grid>
   </div>
@@ -72,6 +85,9 @@ export default {
 }
 </script>
 <style scoped>
-
+.icon{
+  font-size: 2rem;
+  color:#409eff;
+}
 </style>
 

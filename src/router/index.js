@@ -7,6 +7,7 @@ import Register2 from '../page/Register2.vue'
 
 import AllPage from '../page/tab/Index.vue'
 import ProjectPage from '../page/tab/Project.vue'
+import Release from '../page/tab/release.vue'
 import ChatPage from '../page/tab/Chat.vue'
 import ProfilePage from '../page/tab/Profile.vue'
 
@@ -60,6 +61,10 @@ export default new Router({
           path: 'project',
           name: 'tab2',
           component: ProjectPage
+        },
+        {
+          path: 'release',
+          component: Release
         },
         {
           path: 'chat',
