@@ -42,11 +42,72 @@
         </marquee>
       </section>
     </div>
-    <div class="project"></div>
+    <div class="project">
+      <group-title class="project-header"><i class="iconfont icon-jianzhu"></i> 新任务展示</group-title>
+      <hr/>
+      <marquee direction="up" :interval=10000>
+          <marquee-item v-for="i in 5" :key="i" @click.native="onClick(i)" class="align-middle">
+            <ul>
+              <li v-for="(project, index) in projects" :key="" v-if="index <= 10">
+                <section>
+                  <span><i class="iconfont icon-aui-icon-location"></i>{{ project.location }}</span>
+                  <span>{{ project.title }}</span>
+                  <span>| {{ project.price }}</span>
+                </section>
+              </li>
+            </ul>
+          </marquee-item>
+        </marquee>
+    </div>
   </div>
 </template>
 <script>
-import { Swiper, Marquee, MarqueeItem } from 'vux'
+import { Swiper, Marquee, MarqueeItem, GroupTitle } from 'vux'
+
+const projectList = [
+  {
+    location: '河北',
+    title: '监测变压器',
+    extra: '1500',
+    price: 200
+  },
+  {
+    location: '河北',
+    title: '监测变压器',
+    extra: '1500',
+    price: 200
+  },
+  {
+    location: '河北',
+    title: '监测变压器',
+    extra: '1500',
+    price: 200
+  },
+  {
+    location: '河北',
+    title: '监测变压器',
+    extra: '1500',
+    price: 200
+  },
+  {
+    location: '河北',
+    title: '监测变压器',
+    extra: '1500',
+    price: 200
+  },
+  {
+    location: '河北',
+    title: '监测变压器',
+    extra: '1500',
+    price: 200
+  },
+  {
+    location: '河北',
+    title: '监测变压器',
+    extra: '1500',
+    price: 200
+  }
+]
 
 const baseList = [
   {
@@ -71,11 +132,14 @@ export default {
   components: {
     Swiper,
     Marquee,
-    MarqueeItem
+    MarqueeItem,
+    GroupTitle
   },
   data() {
     return {
-      demo01_list: baseList
+      demo01_list: baseList,
+      demo01_index: 0,
+      projects: projectList
     }
   },
   methods: {
@@ -89,11 +153,18 @@ export default {
 .index {
   height: 100%;
   background-color: aliceblue;
+  overflow: scroll;
 }
 header {
   height: 46px;
   width: 100%;
-  background-color: #409EFF;
+  background-color: #409eff;
+  position: fixed;
+  top: 0px;
+  z-index: 999;
+}
+.vux-slider {
+  margin-top: 46px;
 }
 .categories {
   width: 100%;
@@ -111,11 +182,11 @@ header {
   width: 70%;
   height: 70%;
   margin: 0 auto;
-  opacity: .7;
+  opacity: 0.7;
   border-radius: 40%;
-  box-shadow: 1px 1px 9px 0 #409EFF;
+  box-shadow: 1px 1px 9px 0 #409eff;
 }
-.categories-icon>i {
+.categories-icon > i {
   font-size: 2em;
   color: beige;
 }
@@ -132,7 +203,7 @@ header {
   width: 100%;
   display: flex;
 }
-.news-in>div.news-icon {
+.news-in > div.news-icon {
   height: 100%;
   width: 17%;
   border-right: 1px solid gray;
@@ -144,12 +215,31 @@ header {
   bottom: 6px;
 }
 .vux-marquee {
-  width: 83%!important;
-  height: 90%!important;
-  padding-left: 20px!important;
+  width: 83% !important;
+  height: 90% !important;
+  padding-left: 20px !important;
 }
 .vux-marquee-box li {
   list-style-type: none;
+  height: 100%;
+}
+.project {
+  height: 50%;
+  background-color: #fff;
+  margin-top: 7px;
+}
+.project-header {
+  padding: 3px 0 0px 10px;
+  color: #409eff;
+}
+.project section {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.project section:active {
+  color: #409eff;
 }
 /* .news-in>ul {
   width: 83%;
@@ -165,7 +255,5 @@ header {
   content: "• ";
   color: #409EFF;
 } */
-
-
 </style>
 

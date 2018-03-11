@@ -21,7 +21,7 @@
         <span slot="label">消息</span>
       </tabbar-item>
       <tabbar-item badge="2" link="/index/profile">
-        <img slot="icon" src="../assets/account-filling.png">
+        <img slot="icon" src="../assets/user.png">
         <span slot="label">我的</span>
       </tabbar-item>
     </tabbar>
