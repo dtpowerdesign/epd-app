@@ -29,7 +29,7 @@
         </div>
         建筑</div>
     </div>
-    <div class="news">
+      <div class="news">
       <section class="news-in">
         <div class="news-icon">
           <i class="iconfont icon-news1"></i>
