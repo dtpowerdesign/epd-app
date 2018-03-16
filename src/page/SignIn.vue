@@ -54,11 +54,10 @@ export default {
               setTimeout(() => {
                 this.$vux.loading.hide()
                 this.$vux.toast.text('登录成功!', 'top')
-                console.log(response.data)
+                //路由跳转并初始化融云应用
                 this.$startInit(this.submitForm.account, {
                   token: response.data.token
                 })
-                //路由跳转并初始化融云应用
               }, 2000)
             } else {
               setTimeout(() => {
