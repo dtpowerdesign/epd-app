@@ -58,6 +58,8 @@ export default {
                 this.$startInit(this.submitForm.account, {
                   token: response.data.token
                 })
+                localStorage.setItem('userId', this.submitForm.account)
+                this.$router.push('index/all')
               }, 2000)
             } else {
               setTimeout(() => {

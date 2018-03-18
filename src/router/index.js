@@ -11,6 +11,11 @@ import Release from '../page/tab/release.vue'
 import ChatPage from '../page/tab/Chat.vue'
 import ProfilePage from '../page/tab/Profile.vue'
 
+//添加好友组件
+import AddFriend from '../page/chat/add.vue'
+//聊天界面
+import MainChat from '../page/chat/main.vue'
+
 import Index from '../components/Tab.vue'
 import PageTransition from '../components/PageTransition.vue'
 
@@ -68,8 +73,23 @@ export default new Router({
         },
         {
           path: 'chat',
-          name: 'tab3',
-          component: ChatPage
+          component: PageTransition,
+          children: [
+            {
+              path: '',
+              component: ChatPage
+            },
+            {
+              path: '/index/chat/add',  //TODO
+              name: 'addfriend',
+              component: AddFriend
+            },
+            {
+              path: '/index/chat/main', //TODO path
+              name: 'mainchat',
+              component: MainChat
+            }
+          ]
         },
         {
           path: 'profile',
