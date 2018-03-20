@@ -31,8 +31,8 @@ export default {
   data() {
     return {
       submitForm: {
-        account: '',
-        password: ''
+        account: '18731227101',
+        password: '18731227101'
       }
     }
   },
@@ -44,12 +44,12 @@ export default {
       if (this.submitForm.account.length < 6 || this.submitForm.password < 6) {
         this.$vux.toast.text('信息不完整', 'top')
       } else {
+        this.$vux.loading.show({
+          text: 'Loading'
+        })
         this.$http
           .post(this.$domain + '/electric-design/AllUserLogin', this.submitForm)
           .then(response => {
-            this.$vux.loading.show({
-              text: 'Loading'
-            })
             if (response.data.result === true) {
               setTimeout(() => {
                 this.$vux.loading.hide()

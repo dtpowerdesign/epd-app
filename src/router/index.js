@@ -80,12 +80,12 @@ export default new Router({
               component: ChatPage
             },
             {
-              path: '/index/chat/add',  //TODO
+              path: 'add',  //TODO
               name: 'addfriend',
               component: AddFriend
             },
             {
-              path: '/index/chat/main', //TODO path
+              path: 'main', //TODO path
               name: 'mainchat',
               component: MainChat
             }

@@ -19,7 +19,8 @@ Vue.config.productionTip = false
 const myRongIMLib = window.RongIMLib
 const myRongIMClient = myRongIMLib.RongIMClient
 
-Vue.prototype.$domain = 'http://10.14.4.138:8080'
+Vue.prototype.$domain = 'http://39.106.34.156:8080'
+// Vue.prototype.$domain = 'http://10.14.4.138:8080'
 Vue.prototype.$RongIMLib = myRongIMLib
 Vue.prototype.$RongIMClient = myRongIMClient
 Vue.prototype.$Appkey = 'pvxdm17jpibfr'
@@ -27,8 +28,18 @@ Vue.prototype.$startInit = startInit
 Vue.prototype.$http = Axios
 
 const store = new Vuex.Store({
-  state: {},
-  mutations: {}
+  state: {
+    toUser: '',
+    receiveMessages: []
+  },
+  mutations: {
+    setToUserId(state, userId) {
+      state.toUser = userId
+    },
+    addOneMessage(state, msg) {
+      state.receiveMessages.push(msg)
+    }
+  }
 })
 
 /* eslint-disable no-new */
@@ -82,8 +93,13 @@ function startInit(user, config, targetId) {
           alert('有人 @ 了你！')
         }
       }
-      console.log('show1', message)
+      // console.log('show1', message)
       console.log(message)
+      let msg = {}
+      msg.content = message.content
+      msg.receivedTime = message.receivedTime
+      msg.senderUserId = message.senderUserId
+      store.state.receiveMessages.push(msg)
     }
   }
 
@@ -175,8 +191,7 @@ function init(params, callbacks, modules) {
     onReceived(message) {
       //应判断消息类型
       console.log('新消息: ' + message.targetId)
-      console.log(message)
-      console.log('message type:', message.type)
+      console.log('message type:', message.messageType)
       callbacks.receiveNewMessage && callbacks.receiveNewMessage(message)
     }
   })

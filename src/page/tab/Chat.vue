@@ -3,7 +3,7 @@
     <x-header title="聊天" :left-options="{showBack: false}" :right-options="{showMore: true}" @on-click-more="showMenus = true">
     </x-header>
     <swipeout class="vux-1px-tb">
-      <swipeout-item transition-mode="follow" v-for="(item, index) in recentMessage" :key="index" @click.native="chatIm">
+      <swipeout-item transition-mode="follow" v-for="(item, i) in recentMessage" :key="i" @click.native="chatIm(item)">
         <div slot="right-menu">
           <swipeout-button type="warn">{{ '删除' }}</swipeout-button>
         </div>
@@ -12,8 +12,8 @@
           {{ item.toName }}
         </div>
       </swipeout-item>
-      <divider v-show="!recentMessage.length > 0">暂无数据</divider>
     </swipeout>
+    <divider v-show="!recentMessage.length > 0">暂无数据</divider>
     <div v-transfer-dom>
       <actionsheet :menus="menus" v-model="showMenus" @on-click-menu="addFriend" show-cancel></actionsheet>
     </div>
@@ -51,8 +51,10 @@ export default {
     }
   },
   methods: {
-    chatIm() {
-      console.log(localStorage.getItem('userId'))
+    chatIm(item) {
+      let userId = item.otherUserId
+      this.$store.commit('setToUserId', userId)
+      this.$router.push('/index/chat/main')
     },
     fetchRecentMessage(userId) {
       this.$http
