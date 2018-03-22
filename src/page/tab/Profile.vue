@@ -35,12 +35,12 @@
         &gt;
         <i slot="icon" class="iconfont icon-shoucang" style="color:#FF534D;"></i>
       </cell>
-      <cell title="建议反馈">
-        &gt;
+      <cell title="建议反馈" link="/suggestion"  >
+
         <i slot="icon" class="iconfont icon-fankuilast" style="color:#EDD0BE;"></i>
       </cell>
-      <cell title="使用帮助">
-        &gt;
+      <cell title="使用帮助" link="/help">
+
         <i slot="icon" class="iconfont icon-bangzhu" style="color:#25C6FC;"></i>
       </cell>
     </group>
