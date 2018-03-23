@@ -25,6 +25,10 @@ import Statics from '../page/project/statics.vue'
 import ProjectArchive from '../page/show/proarc.vue'
 //服务商展示（归档）
 import ServiceProvided from '../page/show/service.vue'
+//新闻列表
+import NewsArchive from '../page/show/news.vue'
+import SigleNew from '../components/index/new.vue'
+
 import Index from '../components/Tab.vue'
 import PageTransition from '../components/PageTransition.vue'
 
@@ -140,6 +144,21 @@ export default new Router({
         {
           path: 'service',
           component: ServiceProvided
+        },
+        {
+          path: 'news',
+          component: PageTransition,
+          children: [
+            {
+              path: '',
+              component: NewsArchive
+            },
+            {
+              path: 'detail',
+              name: 'new',
+              component: SigleNew
+            }
+          ]
         }
       ]
     }
