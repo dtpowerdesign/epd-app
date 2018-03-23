@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <img src="../assets/logo.png" alt="logo">
+      <img class="icon" src="../assets/logo白底和黑底.png" alt="logo">
       <x-button type="primary" link="/signin">登录</x-button>
       <x-button type="primary" link="/register_1">个人注册</x-button>
       <x-button type="primary" link="/register_2">企业注册</x-button>
@@ -34,5 +34,9 @@ div {
 section {
   width: 80%;
   text-align: center;
+}
+.icon {
+  width: 200px;
+  height: 200px;
 }
 </style>
