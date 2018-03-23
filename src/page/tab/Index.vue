@@ -48,7 +48,7 @@
       <marquee direction="up" :interval=10000>
           <marquee-item v-for="i in 5" :key="i" @click.native="onClick(i)" class="align-middle">
             <ul>
-              <li v-for="(project, index) in projects" :key="index" v-if="index <= 10">
+              <li v-for="(project, index) in projects" :key="index" v-if="index <= 10" v-on:click="goProject">
                 <section>
                   <span><i class="iconfont icon-aui-icon-location"></i>{{ project.location }}</span>
                   <span>{{ project.title }}</span>
@@ -145,6 +145,9 @@ export default {
   methods: {
     demo01_onIndexChange(index) {
       console.log('demo item change', index)
+    },
+    goProject() {
+      this.$router.push('/index/proarc')
     }
   }
 }

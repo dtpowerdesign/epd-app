@@ -15,7 +15,16 @@ import ProfilePage from '../page/tab/Profile.vue'
 import AddFriend from '../page/chat/add.vue'
 //聊天界面
 import MainChat from '../page/chat/main.vue'
-
+//项目管理
+import ProjectManage from '../page/project/manage.vue'
+//项目信息
+import ProjectInfo from '../page/project/info.vue'
+//统计
+import Statics from '../page/project/statics.vue'
+//项目归档
+import ProjectArchive from '../page/show/proarc.vue'
+//服务商展示（归档）
+import ServiceProvided from '../page/show/service.vue'
 import Index from '../components/Tab.vue'
 import PageTransition from '../components/PageTransition.vue'
 
@@ -28,7 +37,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'PageTransition',
+      // name: 'PageTransition',
       component: PageTransition,
       children: [
         {
@@ -54,47 +63,83 @@ export default new Router({
     },
     {
       path: '/index',
-      name: 'Index',
-      component: Index,
+      component: PageTransition,
       children: [
         {
-          path: 'all',
-          name: 'tab1',
-          component: AllPage
-        },
-        {
-          path: 'project',
-          name: 'tab2',
-          component: ProjectPage
-        },
-        {
-          path: 'release',
-          component: Release
-        },
-        {
-          path: 'chat',
-          component: PageTransition,
+          path: '',
+          name: 'Index',
+          component: Index,
           children: [
             {
-              path: '',
-              component: ChatPage
+              path: 'all',
+              name: 'tab1',
+              component: AllPage
             },
             {
-              path: 'add',  //TODO
-              name: 'addfriend',
-              component: AddFriend
+              path: 'project',
+              // name: 'tab2',
+              component: PageTransition,
+              children: [
+                {
+                  path: '',
+                  component: ProjectPage
+                },
+                {
+                  path: 'manage',
+                  name: 'promanage',
+                  component: ProjectManage
+                },
+                {
+                  path: 'info',
+                  name: 'projectinfo',
+                  component: ProjectInfo
+                },
+                {
+                  path: 'statics',
+                  name: 'staticinfo',
+                  component: Statics
+                }
+              ]
             },
             {
-              path: 'main', //TODO path
-              name: 'mainchat',
-              component: MainChat
+              path: 'release',
+              component: Release
+            },
+            {
+              path: 'chat',
+              // name: 'tab3',
+              component: PageTransition,
+              children: [
+                {
+                  path: '',
+                  component: ChatPage
+                },
+                {
+                  path: 'add', //TODO
+                  name: 'addfriend',
+                  component: AddFriend
+                },
+                {
+                  path: 'main', //TODO path
+                  name: 'mainchat',
+                  component: MainChat
+                }
+              ]
+            },
+            {
+              path: 'profile',
+              name: 'tab4',
+              component: ProfilePage
             }
           ]
         },
         {
-          path: 'profile',
-          name: 'tab4',
-          component: ProfilePage
+          path: 'proarc',
+          component: ProjectArchive
+        },
+        {
+          path: 'service',
+          component: ServiceProvided
         }
       ]
     }
