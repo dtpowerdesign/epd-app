@@ -36,6 +36,8 @@ import PageTransition from '../components/PageTransition.vue'
 import suggestion from '../page/tab/tabson/suggestion.vue'
 import Help from '../page/tab/tabson/help.vue'
 import Helpson from '../page/tab/tabson/helpson.vue'
+import interest from '../page/tab/tabson/interest.vue'
+import evaluation from '../page/tab/tabson/evaluation.vue'
 //-------------------
 Vue.use(Router)
 Router.prototype.goBack = function() {
@@ -82,6 +84,16 @@ export default new Router({
           path: '/helpson',
           name: 'helpson',
           component: Helpson
+        },
+        {
+          path: '/interest',
+          name: 'interest',
+          component: interest
+        },
+        {
+          path: 'evaluation',
+          name: 'evaluation',
+          component: evaluation
         }
       ]
     },

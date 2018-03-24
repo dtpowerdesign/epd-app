@@ -27,12 +27,10 @@
         &gt;
         <i slot="icon" class="iconfont icon-zizhi" style="color:#E03636;"></i>
       </cell>
-      <cell title="服务评价">
-        &gt;
+      <cell title="服务评价" link="/evaluation">
         <i slot="icon" class="iconfont icon-iconfontevaluate" style="color:#EDD0BE;"></i>
       </cell>
-      <cell title="我感兴趣的">
-        &gt;
+      <cell title="我感兴趣的" link="/interest">
         <i slot="icon" class="iconfont icon-shoucang" style="color:#FF534D;"></i>
       </cell>
       <cell title="建议反馈" link="/suggestion"  >

@@ -2,7 +2,7 @@
     <div class="main">
       <x-header>建议反馈</x-header>
       <group gutter="0">
-        <x-textarea  placeholder="请将您的建议和意见告诉我们" max="300" height="240" v-model="suggestion"></x-textarea>
+        <x-textarea  placeholder="请将您的建议和意见告诉我们" :max="300" :height="240" v-model="suggestion"></x-textarea>
         <x-input  placeholder="请留下您的手机号码，QQ，微信等联系方式" v-model="contact"></x-input>
       </group>
 
