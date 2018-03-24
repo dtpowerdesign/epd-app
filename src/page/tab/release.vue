@@ -1,45 +1,63 @@
 <template>
   <div>
-    <group title="项目基本信息">
-       <x-input title="招标公司" placeholder="请输入招标公司"></x-input>
-       <x-input title="项目名称" placeholder="请输入项目名称"></x-input>
-       <x-input title="项目地点" placeholder="请输入项目地点"></x-input>
-       <selector title="类别"  placeholder="请选择类别" v-model="demo1" :options="list1"></selector>
-       <selector title="类型"  placeholder="请选择类型" v-model="demo2" :options="list2"></selector>
-       <selector title="设计阶段"  placeholder="请选择设计阶段" v-model="demo3" :options="list3"></selector>
-       <selector title="涉及专业"  placeholder="请选择涉及专业" v-model="demo4" :options="list4"></selector>
-       <!-- <selector title="类别"  placeholder="请选择类别" v-model="demo5" :options="list5"></selector> -->
-       <datetime title="开始时间" placeholder="请选择开始时间" format="YYYY-MM-DD " ></datetime>
-       <datetime title="结束时间" placeholder="请选择结束时间" format="YYYY-MM-DD " ></datetime>
+    <x-header class="header" title="发布任务" :left-options="{showBack: false}"></x-header>
+    <group title="任务名称">
+      <x-input title="任务名称"></x-input>
     </group>
+    <group title="任务地点">
+      <x-address title="地点" :list="addressData"></x-address>
+    </group>
+    <group title="详细描述">
+      <x-textarea :max="200" placeholder="详细描述" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>
+    </group>
+    <flexbox>
+      <flexbox-item>
+        <x-button type="primary">发布</x-button>
+      </flexbox-item>
+      <flexbox-item>
+        <x-button type="warn">重置</x-button>
+      </flexbox-item>
+    </flexbox>
   </div>
 </template>
 <script>
-import { Datetime, Selector, XInput, Group, XButton, Cell } from 'vux'
+import {
+  XHeader,
+  Group,
+  XInput,
+  XTextarea,
+  XAddress,
+  ChinaAddressV4Data,
+  XButton,
+  Flexbox,
+  FlexboxItem
+} from 'vux'
 export default {
   components: {
-    Datetime,
-    Selector,
-    XInput,
-    XButton,
+    XHeader,
     Group,
-    Cell},
+    XInput,
+    XTextarea,
+    XAddress,
+    XButton,
+    Flexbox,
+    FlexboxItem
+  },
   data() {
     return {
-      demo1: '',
-      demo2: '',
-      demo3: '',
-      demo4: '',
-      list1: ['1', '2', '3'],
-      list2: ['1', '2', '3'],
-      list3: ['1', '2', '3'],
-      list4: ['1', '2', '3']
-
+      addressData: ChinaAddressV4Data
+    }
+  },
+  methods: {
+    onEvent(event) {
+      console.log(event)
     }
   }
 }
 </script>
 <style scoped>
-
+.vux-flexbox {
+  margin-top: 20px !important;
+}
 </style>
 

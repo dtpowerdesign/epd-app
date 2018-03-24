@@ -1,8 +1,8 @@
 <template>
   <div class="index">
     <header></header>
-    <swiper :list="demo01_list" v-model="demo01_index" @on-index-change="demo01_onIndexChange"></swiper>
-    <div class="categories">
+    <swiper :list="demo01_list" v-model="demo01_index" @on-index-change="demo01_onIndexChange" @click.native="goNews"></swiper>
+    <div class="categories" @click="goProject">
       <div class="categories-items">
         <div class="categories-icon" style="background-color:#E03636;">
           <i class="iconfont icon-yancong"></i>
@@ -35,7 +35,7 @@
           <i class="iconfont icon-news1"></i>
         </div>
         <marquee direction="up">
-          <marquee-item v-for="i in 5" :key="i" @click.native="onClick(i)" class="align-middle">
+          <marquee-item v-for="i in 5" :key="i" @click.native="goNews" class="align-middle">
             <p>• hello world {{i}}</p>
             <p>• hello world {{i+1}}</p>
           </marquee-item>
@@ -46,7 +46,7 @@
       <group-title class="project-header"><i class="iconfont icon-jianzhu"></i> 新任务展示</group-title>
       <hr/>
       <marquee direction="up" :interval=10000>
-          <marquee-item v-for="i in 5" :key="i" @click.native="onClick(i)" class="align-middle">
+          <marquee-item v-for="i in 5" :key="i" @click.native="goProject" class="align-middle">
             <ul>
               <li v-for="(project, index) in projects" :key="index" v-if="index <= 10">
                 <section>
@@ -122,7 +122,7 @@ const baseList = [
   },
   {
     url: 'javascript:',
-    img: 'https://static.vux.li/demo/5.jpg',
+    // img: 'https://static.vux.li/demo/5.jpg',
     title: '送你一次旅行',
     fallbackImg: 'https://static.vux.li/demo/3.jpg'
   }
@@ -145,6 +145,12 @@ export default {
   methods: {
     demo01_onIndexChange(index) {
       console.log('demo item change', index)
+    },
+    goProject() {
+      this.$router.push('/index/proarc')
+    },
+    goNews() {
+      this.$router.push('/index/news')
     }
   }
 }
