@@ -20,11 +20,15 @@ export default {
   methods: {
     goback() {
       this.$router.goBack()
+    },
+    refresh(loaded) {
+      loaded('done')
     }
   },
   data() {
     return {
-      isShow: true
+      isShow: true,
+      projectList: [{}]
     }
   }
 }
@@ -33,6 +37,11 @@ export default {
 .vux-header {
   position: relative;
   z-index: 999;
+}
+.demo3-slot {
+  text-align: center;
+  padding: 8px 0;
+  color: #888;
 }
 </style>
 
