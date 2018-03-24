@@ -2,10 +2,10 @@
     <div class="main">
       <div class="top">
         <x-header>使用帮助</x-header>
-        <p class="title">发单客户需开通会员流程</p>
+        <p class="title">{{this.$route.query.pTitle}}</p>
       </div>
       <div class="img" >
-        <x-img src="/src/assets/help.jpg"  ></x-img>
+        <x-img :src="this.$route.query.imgSrc"  ></x-img>
       </div>
     </div>
 </template>
@@ -17,6 +17,7 @@
       XImg,
       XHeader
     }
+
   }
 </script>
 
