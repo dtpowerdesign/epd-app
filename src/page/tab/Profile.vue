@@ -3,7 +3,7 @@
     <x-header title="" :left-options="{showBack: false}">
       <span slot="left">我的</span>
     </x-header>
-    <div class="header">
+    <div class="header" @click="myMsg">
       <span class="img-box">
         <img src="../../assets/19424162.jpg" alt="">
       </span>
@@ -53,10 +53,15 @@ export default {
     Cell,
     GroupTitle
   },
+  methods: {
+    myMsg() {
+      this.$router.push('/myMsg')
+    }
+  },
   data() {
     return {
       username: 'xxx3210161',
-      phoneNumber: '18730270906'
+      phoneNumber: localStorage.getItem('userId')
     }
   },
   computed: {

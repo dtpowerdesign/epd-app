@@ -38,6 +38,8 @@ import Help from '../page/tab/tabson/help.vue'
 import Helpson from '../page/tab/tabson/helpson.vue'
 import interest from '../page/tab/tabson/interest.vue'
 import evaluation from '../page/tab/tabson/evaluation.vue'
+import myMsg from '../page/tab/tabson/myMsg.vue'
+import changeMsg from '../page/tab/tabson/changeMsg.vue'
 //-------------------
 Vue.use(Router)
 Router.prototype.goBack = function() {
@@ -91,9 +93,19 @@ export default new Router({
           component: interest
         },
         {
-          path: 'evaluation',
+          path: '/evaluation',
           name: 'evaluation',
           component: evaluation
+        },
+        {
+          path: '/myMsg',
+          name: 'myMsg',
+          component: myMsg
+        },
+        {
+          path: 'changeMsg',
+          name: changeMsg,
+          component: changeMsg
         }
       ]
     },

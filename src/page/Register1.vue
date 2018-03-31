@@ -97,6 +97,7 @@ export default {
           .then(response => {
             if (response.data.result === true) {
               this.receivedCode = response.data.checkMsg
+              console.log(response.data.checkMsg)
             } else {
               this.$vux.toast.text('请求次数过多，请稍候再试', 'top')
             }

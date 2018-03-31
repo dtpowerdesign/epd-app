@@ -58,6 +58,16 @@ export default {
                 this.$startInit(this.submitForm.account, {
                   token: response.data.token
                 })
+                //获取用户信息
+                this.$http.post(this.$domain + '/electric-design/getPuserByAccount', {
+                  'account': this.submitForm.account
+                })
+                  .then(response => {
+                    console.log(response.data)
+                    localStorage.setItem('userMsg', JSON.stringify(response.data))
+                    console.log(localStorage.getItem('userMsg'))
+                  })
+                  .catch(error => console.log(error))
                 localStorage.setItem('userId', this.submitForm.account)
                 this.$router.push('index/all')
               }, 2000)
