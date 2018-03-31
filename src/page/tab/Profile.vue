@@ -3,7 +3,7 @@
     <x-header title="" :left-options="{showBack: false}">
       <span slot="left">我的</span>
     </x-header>
-    <div class="header">
+    <div class="header" @click="myMsg">
       <span class="img-box">
         <img src="../../assets/19424162.jpg" alt="">
       </span>
@@ -27,20 +27,18 @@
         &gt;
         <i slot="icon" class="iconfont icon-zizhi" style="color:#E03636;"></i>
       </cell>
-      <cell title="服务评价">
-        &gt;
+      <cell title="服务评价" link="/evaluation">
         <i slot="icon" class="iconfont icon-iconfontevaluate" style="color:#EDD0BE;"></i>
       </cell>
-      <cell title="我感兴趣的">
-        &gt;
+      <cell title="我感兴趣的" link="/interest">
         <i slot="icon" class="iconfont icon-shoucang" style="color:#FF534D;"></i>
       </cell>
-      <cell title="建议反馈">
-        &gt;
+      <cell title="建议反馈" link="/suggestion"  >
+
         <i slot="icon" class="iconfont icon-fankuilast" style="color:#EDD0BE;"></i>
       </cell>
-      <cell title="使用帮助">
-        &gt;
+      <cell title="使用帮助" link="/help">
+
         <i slot="icon" class="iconfont icon-bangzhu" style="color:#25C6FC;"></i>
       </cell>
     </group>
@@ -55,10 +53,15 @@ export default {
     Cell,
     GroupTitle
   },
+  methods: {
+    myMsg() {
+      this.$router.push('/myMsg')
+    }
+  },
   data() {
     return {
       username: 'xxx3210161',
-      phoneNumber: '18730270906'
+      phoneNumber: localStorage.getItem('userId')
     }
   },
   computed: {

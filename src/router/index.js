@@ -32,6 +32,15 @@ import SigleNew from '../components/index/new.vue'
 import Index from '../components/Tab.vue'
 import PageTransition from '../components/PageTransition.vue'
 
+//---------------------
+import suggestion from '../page/tab/tabson/suggestion.vue'
+import Help from '../page/tab/tabson/help.vue'
+import Helpson from '../page/tab/tabson/helpson.vue'
+import interest from '../page/tab/tabson/interest.vue'
+import evaluation from '../page/tab/tabson/evaluation.vue'
+import myMsg from '../page/tab/tabson/myMsg.vue'
+import changeMsg from '../page/tab/tabson/changeMsg.vue'
+//-------------------
 Vue.use(Router)
 Router.prototype.goBack = function() {
   this.isBack = true
@@ -62,6 +71,41 @@ export default new Router({
           path: '/register_2',
           name: 'Register2',
           component: Register2
+        },
+        {
+          path: '/suggestion',
+          name: 'suggestion',
+          component: suggestion
+        },
+        {
+          path: '/help',
+          name: 'help',
+          component: Help
+        },
+        {
+          path: '/helpson',
+          name: 'helpson',
+          component: Helpson
+        },
+        {
+          path: '/interest',
+          name: 'interest',
+          component: interest
+        },
+        {
+          path: '/evaluation',
+          name: 'evaluation',
+          component: evaluation
+        },
+        {
+          path: '/myMsg',
+          name: 'myMsg',
+          component: myMsg
+        },
+        {
+          path: 'changeMsg',
+          name: changeMsg,
+          component: changeMsg
         }
       ]
     },
