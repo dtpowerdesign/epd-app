@@ -9,6 +9,7 @@
         <tab-item>联合体</tab-item>
       </tab>
     </sticky>
+
   </div>
   <load-more tip="暂无数据" background-color="#fbf9fe" :show-loading="false" v-show="isShow"></load-more>
 </div>
@@ -30,7 +31,7 @@ export default {
   },
   data() {
     return {
-      isShow: true
+      isShow: false
     }
   }
 }

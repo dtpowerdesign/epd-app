@@ -31,8 +31,10 @@ export default {
   data() {
     return {
       submitForm: {
-        account: '18731227101',
-        password: '18731227101'
+//        account: '18731227101',
+//        password: '18731227101'
+        account: '1530474911@qq.com',
+        password: '123456'
       }
     }
   },
@@ -65,7 +67,7 @@ export default {
                   .then(response => {
                     console.log(response.data)
                     localStorage.setItem('userMsg', JSON.stringify(response.data))
-                    console.log(localStorage.getItem('userMsg'))
+                    console.log('userMsg:' + localStorage.getItem('userMsg'))
                   })
                   .catch(error => console.log(error))
                 localStorage.setItem('userId', this.submitForm.account)

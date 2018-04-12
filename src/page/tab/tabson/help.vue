@@ -2,7 +2,7 @@
     <div>
       <x-header>使用帮助</x-header>
       <p class="title">热点问题</p>
-      <group  gutter="0" v-for="cell in cells">
+      <group  gutter="0" v-for="(cell,index) in cells" :key="index">
         <cell :title="cell.title" class="cell" @click.native="go(cell.title,cell.imgSrc)" :is-link="true"></cell>
       </group>
     </div>

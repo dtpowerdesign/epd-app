@@ -40,9 +40,15 @@ import interest from '../page/tab/tabson/interest.vue'
 import evaluation from '../page/tab/tabson/evaluation.vue'
 import myMsg from '../page/tab/tabson/myMsg.vue'
 import changeMsg from '../page/tab/tabson/changeMsg.vue'
+import perarchieve from '../page/project/perarchieve.vue'
+import detail from '../page/project/detail.vue'
+import changeTableHead from '../page/project/changeTableHead.vue'
+import total from '../page/project/total.vue'
+import othertotal from '../page/project/othertotal.vue'
+import percombo from '../page/project/percombo.vue'
 //-------------------
 Vue.use(Router)
-Router.prototype.goBack = function() {
+Router.prototype.goBack = function () {
   this.isBack = true
   window.history.go(-1)
 }
@@ -136,6 +142,36 @@ export default new Router({
                   path: 'manage',
                   name: 'promanage',
                   component: ProjectManage
+                },
+                {
+                  path: 'perarchieve',
+                  name: 'perarchieve',
+                  component: perarchieve
+                },
+                {
+                  path: 'percombo',
+                  name: 'percombo',
+                  component: percombo
+                },
+                {
+                  path: 'total',
+                  name: 'total',
+                  component: total
+                },
+                {
+                  path: 'othertotal',
+                  naem: 'othertotal',
+                  component: othertotal
+                },
+                {
+                  path: 'detail',
+                  name: 'detail',
+                  component: detail
+                },
+                {
+                  path: 'changeTableHead',
+                  name: 'changeTableHead',
+                  component: changeTableHead
                 },
                 {
                   path: 'info',
