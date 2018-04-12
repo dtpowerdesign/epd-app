@@ -60,7 +60,7 @@ export default {
   },
   data() {
     return {
-      username: 'xxx3210161',
+      username: JSON.parse(localStorage.getItem('userMsg')).nickName,
       phoneNumber: localStorage.getItem('userId')
     }
   },

@@ -4,7 +4,7 @@
       <card :header="{title:'我感兴趣的'}">
         <div slot="content">
           <checker v-model="selected" type="checkbox" default-item-class="before-select" selected-item-class="after-selected">
-            <checker-item v-for="select in selected" :value="select" class="close-father">{{select}}
+            <checker-item v-for="(select,index) in selected" :value="select" :key="index" class="close-father">{{select}}
             <icon type="clear" class="close"></icon>
             </checker-item>
           </checker>
@@ -13,7 +13,7 @@
       <card :header="{title:'选择'}">
         <div slot="content">
           <checker v-model="selected" type="checkbox" default-item-class="before-select" selected-item-class="after-selected">
-            <checker-item v-for="item in items" :value="item">{{item}}</checker-item>
+            <checker-item v-for="(item,index) in items" :value="item" :key="index">{{item}}</checker-item>
           </checker>
         </div>
       </card>
