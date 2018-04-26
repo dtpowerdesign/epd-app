@@ -8,11 +8,59 @@
   <link rel="stylesheet" href="./static/iconfont/iconfont.css">
   <script src="http://cdn.ronghub.com/RongIMLib-2.3.0.min.js"></script>
   <script src="http://cdn.ronghub.com/RongEmoji-2.2.5.min.js"></script>
+  <!--<script src="src/mui.min.js"></script>-->
+  <!--<script>-->
+    <!--document.addEventListener('plusready', function () {-->
+      <!--var webview = plus.webview.currentWebview()-->
+      <!--plus.key.addEventListener('backbutton', function () {-->
+        <!--webview.canBack(function (e) {-->
+<!--//          let path = this.$route.path-->
+<!--//          if (path !== '/index/all' || path !== '/index/project' || path !== '/index/release' || path !== '/index/chat' || path !== '/index/profile' || path !== '/') {-->
+<!--//            webview.back()-->
+<!--//          } else if (path === '/index/all' || path === '/index/project' || path === '/index/release' || path === '/index/chat' || path === '/index/profile') {-->
+<!--//            webview.hide()-->
+<!--//          } else {-->
+<!--//            webview.close()-->
+<!--//          }-->
+          <!--if (e.canBack) {-->
+            <!--let path = this.$route.path-->
+            <!--if (path === '/index/all') {-->
+              <!--webview.back()-->
+            <!--} else {-->
+              <!--webview.back()-->
+            <!--}-->
+          <!--} else {-->
+            <!--webview.close()//hide,quit-->
+            <!--//plus.runtime.quit();-->
+<!--//            mui.plusReady(function() {-->
+<!--//              //首页返回键处理-->
+<!--//              //处理逻辑：1秒内，连续两次按返回键，则退出应用；-->
+<!--//              var first = null-->
+<!--//              plus.key.addEventListener('backbutton', function() {-->
+<!--//                //首次按键，提示‘再按一次退出应用’-->
+<!--//                if (!first) {-->
+<!--//                  first = new Date().getTime()-->
+<!--//                  mui.toast('再按一次退出应用')-->
+<!--//                  setTimeout(function() {-->
+<!--//                    first = null-->
+<!--//                  }, 1000)-->
+<!--//                } else {-->
+<!--//                  if (new Date().getTime() - first < 1500) {-->
+<!--//                    plus.runtime.quit()-->
+<!--//                  }-->
+<!--//                }-->
+<!--//              }, false)-->
+<!--//            })-->
+          <!--}-->
+        <!--})-->
+      <!--})-->
+    <!--})-->
+  <!--</script>-->
 </head>
 
 <body>
-  <div id="app-box"></div>
-  <!-- built files will be auto injected -->
+<div id="app-box"></div>
+<!-- built files will be auto injected -->
 </body>
 
 </html>

@@ -30,12 +30,12 @@
     data() {
       return {
         cells: [
-            { title: '接单流程', imgSrc: '/src/assets/help.jpg' },
-            { title: '发布任务流程', imgSrc: '/src/assets/help.jpg' },
-            { title: '发单客户需开通会员流程', imgSrc: '/src/assets/help.jpg' },
-            { title: 'APP新用户认证流程', imgSrc: '/src/assets/help.jpg' },
-            { title: '注册好以后，显示不能接单？', imgSrc: '/src/assets/help.jpg' },
-            { title: '注册的时候手机为何收不到验证码？', imgSrc: '/src/assets/help.jpg' }
+            { title: '接单流程', imgSrc: './static/img/help.jpg' },
+            { title: '发布任务流程', imgSrc: './static/img/help.jpg' },
+            { title: '发单客户需开通会员流程', imgSrc: './static/img/help.jpg' },
+            { title: 'APP新用户认证流程', imgSrc: './static/img/help.jpg' },
+            { title: '注册好以后，显示不能接单？', imgSrc: './static/img/help.jpg' },
+            { title: '注册的时候手机为何收不到验证码？', imgSrc: './static/img/help.jpg' }
         ]
       }
     }

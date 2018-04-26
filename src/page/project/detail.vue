@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <x-header>详细信息</x-header>
-    <div class="receive" v-show="receiveShow">
+    <div class="receive" v-show="isShow">
       <p>联合体发起人账号:<span>{{invitation.unionUserId}}</span></p>
       <p>联合体发起人名字:<span>{{invitation.unionUserName}}</span></p>
       <p>我承担的角色:<span>{{invitation.job}}</span></p>
@@ -37,6 +37,15 @@
         ucode: this.$route.query.ucode
       }
     },
+    computed: {
+      isShow() {
+        if (this.receiveShow === 'true') {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
     methods: {
       go() {
         this.$router.push('./changeTableHead')
@@ -49,7 +58,7 @@
         //是否请求联合体发起人的信息
         console.log(this.receiveShow)
         if (this.receiveShow === 'true') {
-          console.log('1')
+//          console.log('1')
 //          console.log('ucode')
           this.$http.post(this.$domain + '/electric-design/getMultRecordByKeysAndValues',
             {
@@ -128,7 +137,7 @@
   }
 
   .table {
-    max-height: 80%;
+    max-height: 60%;
     overflow: auto;
   }
 

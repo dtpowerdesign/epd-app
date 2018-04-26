@@ -50,7 +50,7 @@ new Vue({
 }).$mount('#app-box')
 
 //注册自定义消息
-function registerMessage(type, propertys) {
+function registerMessage (type, propertys) {
   let messageNmae = type //消息名称
   let objectName = 's:' + type //消息内置名称
   let mesasgeTag = new myRongIMLib.Message(true, true) //保存并计数
@@ -63,7 +63,7 @@ function registerMessage(type, propertys) {
   )
 }
 
-function startInit(user, config, targetId) {
+function startInit (user, config, targetId) {
   let params = {
     appKey: 'pvxdm17jpibfr',
     token: config.token,
@@ -84,7 +84,7 @@ function startInit(user, config, targetId) {
       console.log('链接成功；userid=' + userInfo.userId)
       //加入聊天室
     },
-    receiveNewMessage: function(message) {
+    receiveNewMessage: function (message) {
       //判断是否有 @ 自己的消息
       let mentionedInfo = message.content.mentionedInfo || {}
       let ids = mentionedInfo.userIdList || []
@@ -106,7 +106,7 @@ function startInit(user, config, targetId) {
   init(params, callbacks)
 }
 
-function init(params, callbacks, modules) {
+function init (params, callbacks, modules) {
   let appKey = params.appKey
   let token = params.token
   let navi = params.navi || ''
@@ -199,7 +199,7 @@ function init(params, callbacks, modules) {
   //开始连接
   RongIMClient.connect(token, {
     onSuccess(userId) {
-      callbacks.getCurrentUser && callbacks.getCurrentUser({ userId: userId })
+      callbacks.getCurrentUser && callbacks.getCurrentUser({userId: userId})
       console.log('链接成功，用户id：' + userId)
     },
     onTokenIncorrect() {
@@ -210,3 +210,5 @@ function init(params, callbacks, modules) {
     }
   })
 }
+//物理返回键设置
+//设备返回键//TODO

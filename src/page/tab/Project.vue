@@ -3,11 +3,15 @@
     <x-header title="管理" :left-options="{showBack: false}"></x-header>
     <group-title>项目管理</group-title>
     <grid :cols="Cols">
-      <grid-item label="个人业绩" link="/index/project/perarchieve">
+      <grid-item label="个人业绩" link="/index/project/perarchieve" v-if="role === 'puser'">
         <i class="icon iconfont icon-yejiguanli" slot="icon"></i>
         <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
-      <grid-item label="发布新项目">
+      <grid-item label="企业业绩" link="/index/project/perarchieve" v-if="role === 'cuser'">
+        <i class="icon iconfont icon-yejiguanli" slot="icon"></i>
+        <!-- <img slot="icon" src="../../assets/all.png"> -->
+      </grid-item>
+      <grid-item label="发布新项目" link="/index/release">
         <i class="icon iconfont icon-fabu" slot="icon"></i>
         <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
@@ -75,7 +79,8 @@
     },
     data() {
       return {
-        Cols: 4
+        Cols: 4,
+        role: localStorage.getItem('role')
       }
     },
     methods: {
