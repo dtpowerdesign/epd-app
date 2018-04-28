@@ -42,6 +42,7 @@ import myMsg from '../page/tab/tabson/myMsg.vue'
 import changeMsg from '../page/tab/tabson/changeMsg.vue'
 import perarchieve from '../page/project/perarchieve.vue'
 import detail from '../page/project/detail.vue'
+import bidInfo from '../page/project/bidInfo.vue'
 import changeTableHead from '../page/project/changeTableHead.vue'
 import total from '../page/project/total.vue'
 import othertotal from '../page/project/othertotal.vue'
@@ -167,6 +168,11 @@ export default new Router({
                   path: 'detail',
                   name: 'detail',
                   component: detail
+                },
+                {
+                  path: 'bidInfo',
+                  name: 'bidInfo',
+                  component: bidInfo
                 },
                 {
                   path: 'changeTableHead',

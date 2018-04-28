@@ -3,32 +3,32 @@
     <header></header>
     <swiper :list="demo01_list" v-model="demo01_index" @on-index-change="demo01_onIndexChange"
             @click.native="goNews"></swiper>
-    <div class="categories" @click="goProject">
-      <div class="categories-items">
+    <div class="categories">
+      <div class="categories-items" @click="goProject('发电厂')">
         <div class="categories-icon" style="background-color:#E03636;">
           <i class="iconfont icon-yancong"></i>
         </div>
         发电厂
       </div>
-      <div class="categories-items">
+      <div class="categories-items" @click="goProject('输电')">
         <div class="categories-icon" style="background-color:#EDD0BE;">
           <i class="iconfont icon-shuffle"></i>
         </div>
         输电
       </div>
-      <div class="categories-items">
+      <div class="categories-items" @click="goProject('变电')">
         <div class="categories-icon" style="background-color:#FF534D;">
           <i class="iconfont icon-biandianchang"></i>
         </div>
         变电
       </div>
-      <div class="categories-items">
+      <div class="categories-items" @click="goProject('供配电')">
         <div class="categories-icon" style="background-color:#EDD0BE;">
           <i class="iconfont icon-diangongdianqi"></i>
         </div>
         供配电
       </div>
-      <div class="categories-items">
+      <div class="categories-items" @click="goProject('建筑')">
         <div class="categories-icon" style="background-color:#25C6FC;">
           <i class="iconfont icon-jianzhu"></i>
         </div>
@@ -164,8 +164,13 @@
       demo01_onIndexChange(index) {
         console.log('demo item change', index)
       },
-      goProject() {
-        this.$router.push('/index/proarc')
+      goProject(type) {
+        this.$router.push({
+          path: '/index/proarc',
+          query: {
+            type: type
+          }
+        })
       },
       goNews() {
         this.$router.push('/index/news')

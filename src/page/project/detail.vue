@@ -14,18 +14,27 @@
         </tr>
       </x-table>
     </div>
-    <x-button @click.native="go" type="primary">选择显示的内容</x-button>
+    <flexbox>
+      <flexbox-item>
+        <x-button @click.native="go" type="primary">选择显示的内容</x-button>
+      </flexbox-item>
+      <flexbox-item>
+        <x-button @click.native="bidInfo" type="primary">查看投标信息</x-button>
+      </flexbox-item>
+    </flexbox>
   </div>
 </template>
 
 <script>
-  import { XHeader, XTable, Loading, XButton } from 'vux'
+  import { XHeader, XTable, Loading, XButton, Flexbox, FlexboxItem } from 'vux'
   export default {
     components: {
       XHeader,
       XTable,
       Loading,
-      XButton
+      XButton,
+      Flexbox,
+      FlexboxItem
     },
     data() {
       return {
@@ -53,6 +62,14 @@
 //        if (this.$route.query.show === true) {
 //          this.$router.push('./changeTableHead')
 //        }
+      },
+      bidInfo() {
+        this.$router.push({
+          path: './bidInfo',
+          query: {
+            code: this.json.项目编号
+          }
+        })
       },
       initData() {
         //是否请求联合体发起人的信息

@@ -22,7 +22,11 @@
         <x-input title="规模" placeholder="请输入规模的数值" type="number" v-model="form.sizeAndCapacitys"></x-input>
         <selector title="单位" :options="unit" v-model="form.unit"></selector>
         <hr>
-        <selector title="设计阶段" :options="designState" v-model="form.designState"></selector>
+        <!--<selector title="设计阶段" :options="designState" v-model="form.designState[0]"></selector>-->
+        <!--{{form.designState[0]}}-->
+        <checklist title="委托设计阶段" :options="designState" v-model="form.designState"
+                   @click.native="changeState"></checklist>
+        {{form.designState}}
         <checklist title="类型" :options="type" v-model="form.type"></checklist>
         <checklist title="涉及专业" :options="major" v-model="form.major"></checklist>
         <divider>电压等级</divider>
@@ -68,7 +72,8 @@
         <group v-for="i in stateCount" :key="i">
           <group-title solt="title" class="state-title">阶段{{i}}</group-title>
           <selector title="设计阶段" :options="designState" v-model="form.stateUnits[i-1].state"></selector>
-          <datetime title="要求时间" v-model="form.stateUnits[i-1].endTime"></datetime>
+          <datetime title="开始时间" v-model="form.stateUnits[i-1].startTime"></datetime>
+          <datetime title="结束时间" v-model="form.stateUnits[i-1].endTime"></datetime>
           <p style="margin-left:13px;">要求成果</p>
           <x-textarea :max="300" :height="50" v-model="form.stateUnits[i-1].requireResult"></x-textarea>
           <flexbox :gutter="20">
@@ -157,7 +162,7 @@
           voltagelevel3: '',
           place: '',
           major: [],
-          designState: '',
+          designState: [],
           startTime: '',
           endTime: '',
           character: '',
@@ -176,7 +181,7 @@
           projectNowState: '',
           hasInvoice: 'no',
           stateUnits: [
-            {state: '未填', endTime: '未填', requireResult: '未填'}
+            {state: '未填', startTime: '未填', endTime: '未填', requireResult: '未填'}
           ]
         },
         qualificationRequirements: {CET: ''},
@@ -216,6 +221,15 @@
           this.stateCount--
         }
       },
+      changeState() {
+        setTimeout(() => {
+          this.form.stateUnits = []
+          for (let i = 0; i < this.form.designState.length; i++) {
+            this.stateCount = this.form.designState.length
+            this.form.stateUnits.push({state: this.form.designState[i], endTime: '未填', requireResult: '未填'})
+          }
+        }, 100)
+      },
       submit() {
         if (this.form.state) {
           this.form.state = '投标中'
@@ -250,7 +264,8 @@
           'major': this.form.major,
           'address': this.form.place,
           'performanceRequirements': this.form.performanceReq1 + '/数量要求:' + this.form.performanceReq2,
-          'designProcess': this.form.designState,
+          'designProcess': this.form.designState[0],
+          'entrustProcess': this.form.designState,
           'amountOfInvestment': this.form.lowPrice + '-' + this.form.highPrice,
           'lowestPrice': this.form.lowPrice,
           'highestPrice': this.form.highPrice,
@@ -316,7 +331,7 @@
           projectNowState: '',
           hasInvoice: 'no',
           stateUnits: [
-            {state: '未填', endTime: '未填', requireResult: '未填'}
+            {state: '未填', startTime: '未填', endTime: '未填', requireResult: '未填'}
           ]
         }
         this.$vux.alert.show({
