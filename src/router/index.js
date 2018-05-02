@@ -47,6 +47,8 @@ import changeTableHead from '../page/project/changeTableHead.vue'
 import total from '../page/project/total.vue'
 import othertotal from '../page/project/othertotal.vue'
 import percombo from '../page/project/percombo.vue'
+import apply from '../page/chat/apply.vue'
+import friendList from '../page/chat/friendList.vue'
 //-------------------
 Vue.use(Router)
 Router.prototype.goBack = function () {
@@ -203,6 +205,16 @@ export default new Router({
                 {
                   path: '',
                   component: ChatPage
+                },
+                {
+                  path: 'apply',
+                  name: 'apply',
+                  component: apply
+                },
+                {
+                  path: 'friendList',
+                  name: 'friendList',
+                  component: friendList
                 },
                 {
                   path: 'add', //TODO

@@ -45,11 +45,11 @@
         <i class="icon iconfont icon-zhaopinqiatan" slot="icon"></i>
         <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
-      <grid-item label="执行中" @click.native="go('执行中')">
+      <grid-item label="合同执行中" @click.native="go('合同执行中')">
         <i class="icon iconfont icon-jinxingzhong" slot="icon"></i>
         <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>
-      <grid-item label="已完成" @click.native="go('已完成')">
+      <grid-item label="合同终止" @click.native="go('合同终止')">
         <i class="icon iconfont icon-zhongzhi" slot="icon"></i>
         <!-- <img slot="icon" src="../../assets/all.png"> -->
       </grid-item>

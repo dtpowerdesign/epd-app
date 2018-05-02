@@ -58,6 +58,8 @@
                   this.$vux.loading.hide()
                   this.$vux.toast.text('登录成功!', 'top')
                   //路由跳转并初始化融云应用
+//                  console.log('ttttttttt' + response.data.token)
+//                  localStorage.setItem('token', response.data.token)
                   this.$startInit(this.submitForm.account, {
                     token: response.data.token
                   })

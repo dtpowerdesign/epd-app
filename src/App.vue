@@ -5,37 +5,49 @@
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  export default {
+    name: 'app',
+    mounted() {
+      this.$nextTick(() => {
+        this.$startInit(localStorage.getItem('userId'), {token: JSON.parse(localStorage.getItem('userMsg')).token})
+      })
+      this.$one.$on('hasApply', (message) => {
+        console.log('hasApply')
+      })
+    }
+  }
 </script>
 
 <style lang="less">
-@import '~vux/src/styles/reset.less';
-html{
-  font-size: 14px;
-}
-html,
-body {
-  height: 100%;
-}
-body {
-  background-color: #fff;
-}
-#app {
-  width: 100%;
-  height: 100%;
-}
-input::-webkit-input-placeholder{
-  text-align: right;
-  color: #999999;
-}
+  @import '~vux/src/styles/reset.less';
 
+  html {
+    font-size: 14px;
+  }
 
-//项目页面的图标下边距
-.Project{
-  .weui-grid__icon{
-    margin: 0 auto .8rem!important;
-}
-}
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    background-color: #fff;
+  }
+
+  #app {
+    width: 100%;
+    height: 100%;
+  }
+
+  input::-webkit-input-placeholder {
+    text-align: right;
+    color: #999999;
+  }
+
+  //项目页面的图标下边距
+  .Project {
+    .weui-grid__icon {
+      margin: 0 auto .8rem !important;
+    }
+  }
 </style>

@@ -275,6 +275,7 @@
     background-color: #edede9;
     border: 2px solid #ccc;
     box-shadow: 5px 5px 10px #888888;
+    border-radius: 10px;
   }
 
   .order-son {

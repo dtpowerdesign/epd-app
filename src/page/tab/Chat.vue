@@ -1,110 +1,239 @@
 <template>
   <div class="index">
-    <x-header title="聊天" :left-options="{showBack: false}" :right-options="{showMore: true}" @on-click-more="showMenus = true">
+    <x-header title="聊天" :left-options="{showBack: false}" :right-options="{showMore: true}"
+              @on-click-more="showMenus = true">
     </x-header>
-    <swipeout class="vux-1px-tb">
-      <swipeout-item transition-mode="follow" v-for="(item, i) in recentMessage" :key="i" @click.native="chatIm(item)">
-        <div slot="right-menu">
-          <swipeout-button type="warn">{{ '删除' }}</swipeout-button>
+    <div class="content">
+      <x-button @click.native="apply">申请列表</x-button>
+      <x-button style="margin-top: 0" @click.native="friendList">好友列表</x-button>
+      <x-button style="margin-top: 0">群聊列表</x-button>
+      <!--<div class="friendListDiv" v-for="(i, j) in data" :key="j">-->
+      <!--<div class="friendListDivDiv"><span>姓名:</span><span>{{i.name}}</span></div>-->
+      <!--<div class="friendListDivDiv"><span>账号:</span><span>{{i.account}}</span></div>-->
+      <!--<flexbox>-->
+      <!--<flexbox-item>-->
+      <!--<x-button @click="open(i.account, i.name)" type="primary">发送信息</x-button>-->
+      <!--</flexbox-item>-->
+      <!--<flexbox-item>-->
+      <!--<x-button @click="myDelete(i.account, i.name)" type="warn">删除好友</x-button>-->
+      <!--</flexbox-item>-->
+      <!--</flexbox>-->
+      <!--</div>-->
+      <div class="friendListDiv" v-for="(i, j) in recentMessage" :key="j">
+        <div class="friendListDivDiv"><span>姓名/群名称:</span><span>{{i.otherName}}</span></div>
+        <div class="friendListDivDiv"><span>账号/群账号:</span><span>{{i.otherUserId}}</span></div>
+        <div class="friendListDivDiv"><span>时间:</span><span>
+        {{i.msgTime.year+1900}}/{{i.msgTime.month+1}}/{{i.msgTime.date}}/{{i.msgTime.hours}}:{{i.msgTime.minutes}}:{{i.msgTime.seconds}}
+      </span></div>
+        <div class="friendListDivDiv">
+          <span>内容:</span>
+          <p style="color:#409EFF;word-break: break-all;" v-if="i.fromUserId === userId">我:{{i.message.content}}</p>
+          <p style="color:#409EFF;word-break: break-all;" v-if="!(i.fromUserId === userId)">{{i.fromUserName}}:{{i.message.content}}</p>
         </div>
-        <div slot="content" :class="{'vux-1px-b': i !== 3, 'vux-1px-t': i === 1}" style="padding:12px;">
-          <img class="img-box" src="../../assets/19424162.jpg" alt="头像">
-          {{ item.toName }}
-        </div>
-      </swipeout-item>
-    </swipeout>
-    <divider v-show="!recentMessage.length > 0">暂无数据</divider>
+        <flexbox>
+          <!--<el-button type="primary" @click="open(scope.row)" v-if="scope.row.msgToType === 'normal'">与他聊天</el-button>-->
+          <!--<el-button type="primary" @click="open(scope.row)" v-if="scope.row.msgToType === 'group'">群聊天</el-button>-->
+          <!--<el-button type="info" @click="chatDelete(scope.row)">删除</el-button>-->
+          <flexbox-item>
+            <x-button @click.native="goChat(i)" v-if="i.msgToType === 'normal'" type="primary">与他聊天</x-button>
+            <x-button @click.native="goChat(i)" v-if="i.msgToType === 'group'" type="primary">群聊天</x-button>
+          </flexbox-item>
+          <flexbox-item>
+            <x-button @click.native="chatDelete(i)" type="warn">删除消息</x-button>
+          </flexbox-item>
+        </flexbox>
+      </div>
+      <divider v-show="!recentMessage.length > 0">暂无数据</divider>
+    </div>
     <div v-transfer-dom>
       <actionsheet :menus="menus" v-model="showMenus" @on-click-menu="addFriend" show-cancel></actionsheet>
     </div>
   </div>
 </template>
 <script>
-import {
-  XHeader,
-  TransferDom,
-  Actionsheet,
-  Swipeout,
-  SwipeoutItem,
-  SwipeoutButton,
-  Divider
-} from 'vux'
-export default {
-  directives: {
-    TransferDom
-  },
-  components: {
+  import {
     XHeader,
+    TransferDom,
     Actionsheet,
     Swipeout,
     SwipeoutItem,
     SwipeoutButton,
-    Divider
-  },
-  data() {
-    return {
-      menus: {
-        menu1: '添加好友'
-      },
-      showMenus: false,
-      recentMessage: []
-    }
-  },
-  methods: {
-    chatIm(item) {
-      let userId = item.otherUserId
-      this.$store.commit('setToUserId', userId)
-      this.$router.push('/index/chat/main')
+    Divider,
+    XButton,
+    FlexboxItem,
+    Flexbox,
+    Toast
+  } from 'vux'
+  export default {
+    directives: {
+      TransferDom
     },
-    fetchRecentMessage(userId) {
-      this.$http
-        .post(this.$domain + '/electric-design/getCurrentLinkMan', {
-          userId: userId
-        })
-        .then(response => {
-          if (response.status === 200) {
-            let messageLists = response.data
-            messageLists.forEach(element => {
-              this.recentMessage.push(element)
-            })
-          } else {
-            this.$vux.toast.text(response.statusText, 'top')
-          }
-        })
-        .catch(error => {
-          console.log('Inside error, fetching product line items failed', error)
-        })
+    components: {
+      XHeader,
+      Actionsheet,
+      Swipeout,
+      SwipeoutItem,
+      SwipeoutButton,
+      Divider,
+      XButton,
+      FlexboxItem,
+      Flexbox,
+      Toast
     },
-    addFriend(menuKey, menuItem) {
-      if (menuItem === '添加好友') {
-        this.$router.push('/index/chat/add')
+    data() {
+      return {
+        userId: localStorage.getItem('userId'),
+        menus: {
+          menu1: '添加好友'
+        },
+        showMenus: false,
+        recentMessage: []
       }
+    },
+    methods: {
+      apply() {
+        this.$router.push('chat/apply')
+      },
+      friendList() {
+        this.$router.push('chat/friendList')
+      },
+      goChat(i) {
+        this.$router.push({
+          path: '/index/chat/main',
+          query: i
+        })
+      },
+      initData () {
+        this.$http.post(this.$domain + '/electric-design/getFriendList', {'userId': localStorage.getItem('userId')})
+          .then((res) => {
+            console.log(res.data)
+            this.data = res.data
+          }).catch((err) => {
+            console.log(err)
+          })
+      },
+      chatIm(item) {
+        let userId = item.otherUserId
+        this.$store.commit('setToUserId', userId)
+        this.$router.push('/index/chat/main')
+      },
+      fetchRecentMessage(userId) {
+        this.$http
+          .post(this.$domain + '/electric-design/getCurrentLinkMan', {
+            userId: userId
+          })
+          .then(response => {
+            if (response.status === 200) {
+              let messageLists = response.data
+              messageLists.forEach(element => {
+                this.recentMessage.push(element)
+              })
+              console.log(this.recentMessage)
+            } else {
+              this.$vux.toast.text(response.statusText, 'top')
+            }
+          })
+          .catch(error => {
+            console.log('Inside error, fetching product line items failed', error)
+          })
+      },
+      addFriend(menuKey, menuItem) {
+        if (menuItem === '添加好友') {
+          this.$router.push('/index/chat/add')
+        }
+      },
+      chatDelete (row) {
+        this.$http.post(this.$domain + '/electric-design/delTableRecod', {
+          'table': 'currentChat',
+          'keyNames': ['belongToUser', 'otherUserId'],
+          'keyValues': [this.userId, row.otherUserId]
+        }).then((res) => {
+          if (res.data.result) {
+            this.$vux.toast.show({
+              text: '聊天记录删除成功',
+              type: 'text'
+            })
+            this.recentMessage = this.recentMessage.filter((i) => i.otherUserId !== row.otherUserId)
+          } else {
+            this.$vux.toast.show({
+              text: `失败原因:${res.data.reason}`,
+              type: 'text'
+            })
+            console.log(res.data)
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+      },
+      open (row) {
+        if (row.msgToType === 'group') {
+          this.dialogVisibleChat = false
+          this.dialogVisibleChatGroup = true
+          this.toUserId = row.otherUserId
+          this.toName = row.otherName
+          this.limit = 3
+          this.getChatMsgGroup()
+        } else {
+          this.dialogVisibleChat = true
+          this.dialogVisibleChatGroup = false
+          this.toUserId = row.otherUserId
+          this.toName = row.otherName
+          this.limit = 3
+          this.getChatMsg()
+        }
+      },
+      getChatMsg (item) {
+        this.$http.post(this.$domain + '/electric-design/getLimitChatMsgOfNormal', {'userId1': item.toUserId, 'userId2': this.userId, count: 5, start: 0})
+          .then((res) => {
+            console.log(res.data)
+//            this.ChatMsg = res.data
+          })
+      }
+    },
+    mounted() {
+//      this.initData()
+      this.fetchRecentMessage(localStorage.getItem('userId'))
     }
-  },
-  mounted() {
-    this.fetchRecentMessage(localStorage.getItem('userId'))
   }
-}
 </script>
 <style scoped>
-.index {
-  height: 100%;
-  background-color: aliceblue;
-  overflow: scroll;
-}
-.img-box {
-  display: inline-block;
-  width: 4em;
-  height: 4em;
-  border-radius: 2em;
-  margin-right: 5px;
-}
-.vux-swipeout-item {
-  border-bottom: 1px solid #dadada;
-}
-.vux-swipeout-content > div {
-  display: flex;
-  align-items: center;
-}
+  .index {
+    height: 100%;
+    background-color: aliceblue;
+    overflow: scroll;
+  }
+  .content{
+    height: 80%;
+    overflow: auto;
+  }
+  .friendListDiv{
+    width:85%;
+    margin:1rem;
+    padding: 1rem;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  }
+  .friendListDivDiv{
+    margin: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .img-box {
+    display: inline-block;
+    width: 4em;
+    height: 4em;
+    border-radius: 2em;
+    margin-right: 5px;
+  }
+
+  .vux-swipeout-item {
+    border-bottom: 1px solid #dadada;
+  }
+
+  .vux-swipeout-content > div {
+    display: flex;
+    align-items: center;
+  }
 </style>
 

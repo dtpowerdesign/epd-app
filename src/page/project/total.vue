@@ -16,7 +16,7 @@
         <tr v-for="(item,index) in tableData">
           <td>{{item.name}}</td>
           <td class="btn">
-            <x-button type="primary" text="查看详情" mini @click.native="go(item.code)"></x-button>
+            <x-button type="primary" text="查看详情" mini @click.native="go(item.code,item.state)"></x-button>
           </td>
         </tr>
         </tbody>
@@ -52,11 +52,12 @@
 //            console.log(this.tableData[0])
           })
       },
-      go(code) {
+      go(code, show) {
         this.$router.push({
           path: 'detail',
           query: {
-            code: code
+            code: code,
+            show: show
           }
         })
       }

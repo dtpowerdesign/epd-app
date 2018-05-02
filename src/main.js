@@ -41,6 +41,13 @@ const store = new Vuex.Store({
     }
   }
 })
+var bus = new Vue({
+  store,
+  data: {
+    people: []
+  }
+})
+Vue.prototype.$one = bus
 
 /* eslint-disable no-new */
 new Vue({
@@ -188,14 +195,29 @@ function init (params, callbacks, modules) {
    */
   RongIMClient.setOnReceiveMessageListener({
     //接收到的消息
+    // onReceived(message) {
+    //   //应判断消息类型
+    //   console.log('新消息: ' + message.targetId)
+    //   console.log('message type:', message.messageType)
+    //   callbacks.receiveNewMessage && callbacks.receiveNewMessage(message)
+    // }
     onReceived(message) {
-      //应判断消息类型
-      console.log('新消息: ' + message.targetId)
-      console.log('message type:', message.messageType)
+      // 应判断消息类型
+      // console.log('新消息: ' + message.targetId)
+      console.log(message)
+      if (message.content.extra === '系统消息') {
+        bus.$emit('refreshApply', message)
+        bus.$emit('hasApply', message)
+      } else {
+        bus.$emit('refresh', message)
+        bus.$emit('has', message)
+      }
+      // console.log(this.$store.state.people[0])
+      // Vue.set(bus.$data.people, message.targetId, message)
+      // console.log(bus.$data.people[message.targetId])
       callbacks.receiveNewMessage && callbacks.receiveNewMessage(message)
     }
   })
-
   //开始连接
   RongIMClient.connect(token, {
     onSuccess(userId) {

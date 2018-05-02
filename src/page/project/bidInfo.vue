@@ -7,7 +7,7 @@
         <p><span>投标人账号：</span><span>{{i.srcUserAccount}}</span></p>
         <p><span>投标人姓名：</span><span>{{i.srcUserName}}</span></p>
         <p><span>投标描述：</span><span>{{i.bidInstruction}}</span></p>
-        <p v-for="file in i.upDatas" style="position: relative">
+        <p v-for="file in i.upDatas" style="position: relative;margin-top: 10px;">
           <span>投标附件：</span><span>{{file.dataName}}</span>
           <span><x-button type="primary" style="display: inline-block;position: absolute;right: 30px;" mini
                           @click.native="download(file.urlPath)">下载附件</x-button></span>
@@ -19,7 +19,7 @@
         <p><span>投标企业账号：</span><span>{{i.srcUserAccount}}</span></p>
         <p><span>投标企业名称：</span><span>{{i.srcUserName}}</span></p>
         <p><span>投标描述：</span><span>{{i.bidInstruction}}</span></p>
-        <p v-for="file in i.upDatas" style="position: relative">
+        <p v-for="file in i.upDatas" style="position: relative;margin-top: 10px;">
           <span>投标附件：</span><span>{{file.dataName}}</span>
           <span><x-button type="primary" style="display: inline-block;position: absolute;right: 30px;" mini
                           @click.native="download(file.urlPath)">下载附件</x-button></span>
@@ -32,7 +32,7 @@
         <p><span>投标投标姓名：</span><span>{{i.srcUserName}}</span></p>
         <p><span>投标人类型：</span><span>{{formatType(i.srcUserType)}}</span></p>
         <p><span>投标描述：</span><span>{{i.bidInstruction}}</span></p>
-        <p v-for="file in i.upDatas" style="position: relative">
+        <p v-for="file in i.upDatas" style="position: relative;margin-top: 10px;">
           <span>投标附件：</span><span>{{file.dataName}}</span>
           <span><x-button type="primary" style="display: inline-block;position: absolute;right: 30px;" mini
                           @click.native="download(file.urlPath)">下载附件</x-button></span>
@@ -108,6 +108,7 @@
     background-color: #edede9;
     border: 2px solid #ccc;
     box-shadow: 5px 5px 10px #888888;
+    border-radius: 10px;
   }
 
   .merber {
@@ -116,5 +117,6 @@
     background-color: #edede9;
     border: 2px solid #ccc;
     box-shadow: 5px 5px 10px #888888;
+    border-radius: 10px;
   }
 </style>
