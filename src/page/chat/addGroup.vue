@@ -1,18 +1,25 @@
 <template>
   <div class="index">
-    <x-header title="添加好友" :left-options="{preventGoBack: true}" @on-click-back="goback">
+    <x-header title="加入群组" :left-options="{preventGoBack: true}" @on-click-back="goback">
     </x-header>
-    <group title="添加好友">
-      <x-input v-model="form.value" placeholder="手机/邮箱/姓名" placeholder-align="right"
+    <group title="加入群组">
+      <x-input v-model="form.value" placeholder="群账号/群名称" placeholder-align="right"
                @on-change="fetchFriendData(form.value)"></x-input>
     </group>
     <div class="results">
       <ul>
-        <li v-for="(item, index) in searchLists" :key="index">
-          <img :src="item.portraitUri" alt="">
-          <span>{{ item.name }}</span>
-          <x-input placeholder="请输入验证信息" placeholder-align="left" v-model="extraMsg"></x-input>
-          <x-button type="primary" text="添加好友" :mini=true @click.native="sendFriendRequest(item)"></x-button>
+        <li v-for="(item, index) in searchLists" :key="index" class="searchLi">
+          <ul style="text-align: center;">
+            <li><span>群名称：</span><span style="text-align: right;">{{ item.groupName }}</span></li>
+            <li><span>群ID：</span><span style="text-align: right;">{{ item.groupId }}</span></li>
+            <li><span>群介绍：</span><span style="text-align: right;">{{ item.instraction }}</span></li>
+            <li>
+              <x-input placeholder="请输入验证信息" placeholder-align="left" v-model="extraMsg"></x-input>
+              <x-button type="primary" style="text-align: center;" text="申请加入" :mini=true
+                        @click.native="sendFriendRequest(item)"></x-button>
+            </li>
+          </ul>
+
         </li>
       </ul>
       <load-more tip="暂无数据" background-color="#fbf9fe" :show-loading="false" v-show="isShow"></load-more>
@@ -48,9 +55,9 @@
         let sendForm = {}
         sendForm.fromUserId = localStorage.getItem('userId')
         sendForm.fromUserName = JSON.parse(localStorage.getItem('userMsg')).name
-        sendForm.applyType = 'normal'
-        sendForm.toUserId = item.account
-        sendForm.toName = item.name
+        sendForm.applyType = 'group'
+        sendForm.toGroupId = item.groupId
+        sendForm.toName = item.groupName
         sendForm.extraMsg = this.extraMsg
         this.$vux.loading.show({
           text: 'Loading'
@@ -60,24 +67,25 @@
           .then(res => {
             if (res.data.result) {
               this.$vux.loading.hide()
-              this.$http.post(this.$domain + '/electric-design/private_publish', {
+              this.$http.post(this.$domain + '/electric-design/group_publish', {
                 'fromUserId': localStorage.getItem('userId'),
                 'fromUserName': JSON.parse(localStorage.getItem('userMsg')).name,
-                'toUserId': item.account,
-                'toName': item.name,
+                'toUserId': item.groupId,
+                'toName': item.groupName,
                 'objectName': 'RC:TxtMsg',
-                'message': {content: '向您发送好友申请', extra: '系统消息'}
+                'message': {content: '请求加入群' + item.groupName, extra: '系统消息'}
               })
                 .then((res) => {
                   this.$vux.toast.show({
-                    text: '申请发送成功,等待对方同意'
+                    text: `群申请发送成功,等待同意`
                   })
                   console.log('success')
                   this.extraMsg = ''
-                }).catch((err) => {
-                  console.log(err)
                 })
             } else {
+              this.$vux.toast.show({
+                text: `发送失败,原因:${res.data.reason}`
+              })
               console.log(res.data.reason)
             }
           })
@@ -96,9 +104,9 @@
           return false
         } else {
           this.$http
-            .post(this.$domain + '/electric-design/searchAllUsersByValue', {
-              value: value
-            })
+            .post(this.$domain + '/electric-design/searchTableByValue',
+              {'table': 'chatgroup', 'value': this.form.value}
+            )
             .then(response => {
               console.log(response)
               this.searchLists = []

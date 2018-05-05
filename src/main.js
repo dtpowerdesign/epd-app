@@ -8,6 +8,8 @@ import router from './router/index'
 import 'animate.css'
 import { LoadingPlugin, ToastPlugin } from 'vux'
 import Axios from 'axios'
+// let apply = '0'
+// Vue.prototype.$apply = apply
 
 FastClick.attach(document.body)
 
@@ -41,6 +43,39 @@ const store = new Vuex.Store({
     }
   }
 })
+var bus = new Vue({
+  store,
+  data: {
+    people: [],
+    path: ''
+  },
+  methods: {
+    test(path) {
+      // function btn () {
+      let webview = window.plus.webview.currentWebview()
+      function ev () {
+        webview.canBack(function (e) {
+          if (e.canBack) {
+            if (path === '/index/all' || path === '/index/project' || path === '/index/release' || path === '/index/chat' || path === '/index/profile' || path === '/' || path === '/signin' || path === '/register_1' || path === '/register_2') {
+              webview.close()
+            } else {
+              webview.back()
+            }
+          } else {
+            webview.close()//hide,quit
+          }
+        })
+      }
+      window.plus.key.removeEventListener('backbutton', ev)
+      window.plus.key.addEventListener('backbutton', ev)
+      // }
+
+      // document.removeEventListener('plusready', btn)
+      // document.addEventListener('plusready', btn)
+    }
+  }
+})
+Vue.prototype.$one = bus
 
 /* eslint-disable no-new */
 new Vue({
@@ -50,7 +85,7 @@ new Vue({
 }).$mount('#app-box')
 
 //注册自定义消息
-function registerMessage(type, propertys) {
+function registerMessage (type, propertys) {
   let messageNmae = type //消息名称
   let objectName = 's:' + type //消息内置名称
   let mesasgeTag = new myRongIMLib.Message(true, true) //保存并计数
@@ -63,7 +98,7 @@ function registerMessage(type, propertys) {
   )
 }
 
-function startInit(user, config, targetId) {
+function startInit (user, config, targetId) {
   let params = {
     appKey: 'pvxdm17jpibfr',
     token: config.token,
@@ -84,7 +119,7 @@ function startInit(user, config, targetId) {
       console.log('链接成功；userid=' + userInfo.userId)
       //加入聊天室
     },
-    receiveNewMessage: function(message) {
+    receiveNewMessage: function (message) {
       //判断是否有 @ 自己的消息
       let mentionedInfo = message.content.mentionedInfo || {}
       let ids = mentionedInfo.userIdList || []
@@ -106,7 +141,7 @@ function startInit(user, config, targetId) {
   init(params, callbacks)
 }
 
-function init(params, callbacks, modules) {
+function init (params, callbacks, modules) {
   let appKey = params.appKey
   let token = params.token
   let navi = params.navi || ''
@@ -188,18 +223,33 @@ function init(params, callbacks, modules) {
    */
   RongIMClient.setOnReceiveMessageListener({
     //接收到的消息
+    // onReceived(message) {
+    //   //应判断消息类型
+    //   console.log('新消息: ' + message.targetId)
+    //   console.log('message type:', message.messageType)
+    //   callbacks.receiveNewMessage && callbacks.receiveNewMessage(message)
+    // }
     onReceived(message) {
-      //应判断消息类型
-      console.log('新消息: ' + message.targetId)
-      console.log('message type:', message.messageType)
+      // 应判断消息类型
+      // console.log('新消息: ' + message.targetId)
+      console.log(message)
+      if (message.content.extra === '系统消息') {
+        bus.$emit('refreshApply', message)
+        bus.$emit('hasApply', message)
+      } else {
+        bus.$emit('refresh', message)
+        bus.$emit('has', message)
+      }
+      // console.log(this.$store.state.people[0])
+      // Vue.set(bus.$data.people, message.targetId, message)
+      // console.log(bus.$data.people[message.targetId])
       callbacks.receiveNewMessage && callbacks.receiveNewMessage(message)
     }
   })
-
   //开始连接
   RongIMClient.connect(token, {
     onSuccess(userId) {
-      callbacks.getCurrentUser && callbacks.getCurrentUser({ userId: userId })
+      callbacks.getCurrentUser && callbacks.getCurrentUser({userId: userId})
       console.log('链接成功，用户id：' + userId)
     },
     onTokenIncorrect() {
@@ -210,3 +260,44 @@ function init(params, callbacks, modules) {
     }
   })
 }
+//物理返回键设置
+//设备返回键//TODO
+// document.addEventListener('plusready', function () {
+//   var webview = window.plus.webview.currentWebview()
+//   window.plus.key.addEventListener('backbutton', function () {
+//     webview.canBack(function (e) {
+//       if (e.canBack) {
+//         // webview.back()
+//         //this.$one.data.path === '/index/all' || this.$one.data.path === '/index/project' || this.$one.data.path === '/index/release' || this.$one.data.path === '/index/chat' || this.$one.data.path === '/index/profile'
+//         // let a = '/index/all'
+//         if (bus.data === '/index/all') {
+//           webview.close()
+//         } else {
+//           webview.back()
+//         }
+//       } else {
+//         webview.close()//hide,quit
+//         //plus.runtime.quit();
+//         // mui.plusReady(function () {
+//         //   //首页返回键处理
+//         //   //处理逻辑：1秒内，连续两次按返回键，则退出应用；
+//         //   var first = null
+//         //   plus.key.addEventListener('backbutton', function () {
+//         //     //首次按键，提示‘再按一次退出应用’
+//         //     if (!first) {
+//         //       first = new Date().getTime()
+//         //       mui.toast('再按一次退出应用')
+//         //       setTimeout(function () {
+//         //         first = null
+//         //       }, 1000)
+//         //     } else {
+//         //       if (new Date().getTime() - first < 1500) {
+//         //         plus.runtime.quit()
+//         //       }
+//         //     }
+//         //   }, false)
+//         // })
+//       }
+//     })
+//   })
+// })

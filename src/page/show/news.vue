@@ -46,20 +46,26 @@ export default {
         {
           code: 1,
           title: '洗颜新潮流！人气洁面皂排行榜',
-          img: 'https://static.vux.li/demo/1.jpg'
+//          img: 'https://static.vux.li/demo/1.jpg'
+          img: 'http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png'
         },
         {
           code: 2,
           title: '美容用品 & 日用品（上）',
-          img: 'https://static.vux.li/demo/2.jpg'
+//          img: 'https://static.vux.li/demo/2.jpg'
+          img: 'http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png'
         },
         {
           code: 3,
           title: '远离车内毒气，日本车载空气净化器精选',
-          img: 'https://static.vux.li/demo/3.jpg'
+//          img: 'https://static.vux.li/demo/3.jpg'
+          img: 'http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png'
         }
       ]
     }
+  },
+  mounted() {
+    this.$one.test(this.$route.path)
   }
 }
 </script>

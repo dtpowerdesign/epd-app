@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <x-header>详细信息</x-header>
-    <div class="receive" v-show="receiveShow">
+    <div class="receive" v-show="isShow">
       <p>联合体发起人账号:<span>{{invitation.unionUserId}}</span></p>
       <p>联合体发起人名字:<span>{{invitation.unionUserName}}</span></p>
       <p>我承担的角色:<span>{{invitation.job}}</span></p>
@@ -10,22 +10,31 @@
       <x-table>
         <tr v-for="(item,index) in json">
           <td class="left">{{index}}</td>
-          <td>{{item}}</td>
+          <td class="right">{{item}}</td>
         </tr>
       </x-table>
     </div>
-    <x-button @click.native="go" type="primary">选择显示的内容</x-button>
+    <flexbox>
+      <flexbox-item>
+        <x-button @click.native="go" type="primary">选择显示的内容</x-button>
+      </flexbox-item>
+      <flexbox-item v-if="this.$route.query.show==='投标中'&&this.releaseUserAccount === this.user">
+        <x-button @click.native="bidInfo" type="primary">查看投标信息</x-button>
+      </flexbox-item>
+    </flexbox>
   </div>
 </template>
 
 <script>
-  import { XHeader, XTable, Loading, XButton } from 'vux'
+  import { XHeader, XTable, Loading, XButton, Flexbox, FlexboxItem } from 'vux'
   export default {
     components: {
       XHeader,
       XTable,
       Loading,
-      XButton
+      XButton,
+      Flexbox,
+      FlexboxItem
     },
     data() {
       return {
@@ -34,7 +43,18 @@
         tableData: {},
         receiveShow: this.$route.query.show,
         invitation: {},
-        ucode: this.$route.query.ucode
+        ucode: this.$route.query.ucode,
+        releaseUserAccount: '',
+        user: localStorage.getItem('userId')
+      }
+    },
+    computed: {
+      isShow() {
+        if (this.receiveShow === 'true') {
+          return true
+        } else {
+          return false
+        }
       }
     },
     methods: {
@@ -45,11 +65,19 @@
 //          this.$router.push('./changeTableHead')
 //        }
       },
+      bidInfo() {
+        this.$router.push({
+          path: './bidInfo',
+          query: {
+            code: this.json.项目编号
+          }
+        })
+      },
       initData() {
         //是否请求联合体发起人的信息
         console.log(this.receiveShow)
         if (this.receiveShow === 'true') {
-          console.log('1')
+//          console.log('1')
 //          console.log('ucode')
           this.$http.post(this.$domain + '/electric-design/getMultRecordByKeysAndValues',
             {
@@ -72,6 +100,8 @@
             this.$http.post(this.$domain + '/electric-design/getProjectByCode',
               {'code': this.$route.query.code}
             ).then(res => {
+//              console.log(res.data)
+              this.releaseUserAccount = res.data.releaseUserAccount
               if (res.data['releaseUserAccount'] === localStorage.getItem('userId') && res.data['state'] === '投标中') {
                 res.data['state'] = '招标中'
               }
@@ -89,12 +119,12 @@
                 } else {
                   this.tableData[i] = temp[i]
                 }
-//              console.log(this.tableData)
+//                console.log('ttt' + this.tableData.name)
                 for (i in this.tableKey) {
                   this.$set(this.json, this.tableKey[i], this.tableData[i])
                 }
               }
-              console.log(this.json)
+//              console.log(this.json)
 
               //------------------------------
 //        this.tableData = res.data
@@ -118,6 +148,7 @@
       this.$vux.loading.show({
         text: 'Loading'
       })
+      this.$one.test(this.$route.path)
     }
   }
 </script>
@@ -125,10 +156,12 @@
 <style scoped>
   .main {
     height: 100%;
+    width: 100%;
   }
 
   .table {
-    max-height: 80%;
+    max-height: 60%;
+    width: 100%;
     overflow: auto;
   }
 
@@ -138,11 +171,21 @@
     min-width: 150px
   }
 
+  .right {
+    word-break: break-all;
+  }
+
   .receive {
-    background-color: #e8e8e8;
-    color: #65b9bb;
+    margin: 10px;
+    padding: 5px;
+    background-color: #edede9;
+    border: 2px solid #ccc;
+    box-shadow: 5px 5px 10px #888888;
+    border-radius: 10px;
+    /*background-color: #e8e8e8;*/
+    /*color: #65b9bb;*/
     font-size: 18px;
-    padding-left: 10px;
+    /*padding-left: 10px;*/
   }
 
   .receive span {

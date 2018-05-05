@@ -16,6 +16,9 @@
     components: {
       XImg,
       XHeader
+    },
+    mounted() {
+      this.$one.test(this.$route.path)
     }
 
   }

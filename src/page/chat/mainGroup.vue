@@ -45,12 +45,11 @@
         talks: [],
         message: '',
         isLoading: false,
-        title: this.$route.query.otherName,
+        title: this.$route.query.groupName,
         userId: localStorage.getItem('userId'),
         userName: JSON.parse(localStorage.getItem('userMsg')).name,
         ChatMsg: [],
-        toUserId: this.$route.query.otherUserId,
-        toName: this.$route.query.otherNamel,
+        groupId: this.$route.query.groupId,
         limit: 3
       }
     },
@@ -70,15 +69,15 @@
             type: 'text'
           })
         } else {
-          this.$http.post(this.$domain + '/electric-design/private_publish', {
+          this.$http.post(this.$domain + '/electric-design/group_publish', {
             'fromUserId': this.userId,
             'fromUserName': this.userName,
-            'toUserId': this.toUserId,
-            'toName': this.toName,
+            'toGroupId': this.groupId,
+            'toName': this.title,
             'objectName': 'RC:TxtMsg',
             'message': {
               content: this.message,
-              extra: {'name': this.userName, 'type': 'normal', 'otherName': this.userName}
+              extra: {'name': this.userName, 'type': 'group', 'otherName': this.title}
             }
           })
             .then((res) => {
@@ -190,9 +189,8 @@
         }
       },
       getChatMsg (item) {
-        this.$http.post(this.$domain + '/electric-design/getLimitChatMsgOfNormal', {
-          'userId1': this.toUserId,
-          'userId2': this.userId,
+        this.$http.post(this.$domain + '/electric-design/getChatMsgOfGroup', {
+          'groupId': this.groupId,
           count: this.limit,
           start: 0
         })
@@ -206,6 +204,18 @@
           })
       },
       initData() {
+        this.$http.post(this.$domain + '/electric-design/sync', {userId: localStorage.getItem('userId')})
+          .then((res) => {
+            if (res.data.code === 200) {
+//              this.$vux.toast.show({
+//                text: '群消息同步成功'
+//              })
+            } else {
+              this.$vux.toast.show({
+                text: '群消息同步失败'
+              })
+            }
+          }).catch((err) => { console.log(err) })
         console.log(this.$route.query)
         this.getChatMsg(this.$route.query)
         this.$nextTick(() => {
@@ -217,10 +227,10 @@
     mounted() {
       this.initData()
       this.$one.$on('refresh', (message) => {
-        if (message.targetId === this.toUserId) {
+        if (message.targetId !== this.userId) {
           this.ChatMsg.push({
             'fromUserId': message.senderUserId,
-            'fromUserName': this.title,
+            'fromUserName': JSON.parse(message.content.extra).name,
             'msgTime': {
               date: new Date().getDate(),
               day: new Date(message.receivedTime).getDay(),

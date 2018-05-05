@@ -20,6 +20,9 @@ export default {
     return {
       isShow: true
     }
+  },
+  mounted() {
+    this.$one.test(this.$route.path)
   }
 }
 </script>

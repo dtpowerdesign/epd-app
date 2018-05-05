@@ -10,33 +10,51 @@
 </template>
 
 <script>
-import { XButton } from 'vux'
-export default {
-  components: {
-    XButton
-  },
-  data() {
-    return {}
+  import { XButton, Toast } from 'vux'
+  export default {
+    components: {
+      XButton,
+      Toast
+    },
+    data() {
+      return {}
+    },
+    methods: {
+      initData() {
+        if (localStorage.getItem('userId') && localStorage.getItem('userMsg') && localStorage.getItem('role')) {
+          this.$vux.toast.show({
+            type: 'success',
+            text: '检测到您的账号自动为您登录！'
+          })
+          this.$router.push('/index/all')
+        }
+      }
+    },
+    mounted() {
+      this.initData()
+      this.$one.test(this.$route.path)
+    }
   }
-}
 </script>
 
 <style scoped>
-div {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  background-color: #fff;
-  padding: 0;
-  justify-content: center;
-  align-items: center;
-}
-section {
-  width: 80%;
-  text-align: center;
-}
-.icon {
-  width: 200px;
-  height: 200px;
-}
+  div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #fff;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  section {
+    width: 80%;
+    text-align: center;
+  }
+
+  .icon {
+    width: 200px;
+    height: 200px;
+  }
 </style>
