@@ -79,6 +79,9 @@
           data5: 0
         }
       }
+    },
+    mounted() {
+      this.$one.test(this.$route.path)
     }
   }
 </script>

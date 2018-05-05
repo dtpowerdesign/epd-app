@@ -38,6 +38,9 @@
             { title: '注册的时候手机为何收不到验证码？', imgSrc: './static/img/help.jpg' }
         ]
       }
+    },
+    mounted() {
+      this.$one.test(this.$route.path)
     }
   }
 </script>

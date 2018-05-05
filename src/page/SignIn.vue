@@ -121,6 +121,9 @@
         //   this.$vux.toast.text('账号或密码错误')
         // }
       }
+    },
+    mounted() {
+      this.$one.test(this.$route.path)
     }
   }
 </script>

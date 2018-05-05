@@ -49,6 +49,10 @@ import othertotal from '../page/project/othertotal.vue'
 import percombo from '../page/project/percombo.vue'
 import apply from '../page/chat/apply.vue'
 import friendList from '../page/chat/friendList.vue'
+import addGroup from '../page/chat/addGroup.vue'
+import groupList from '../page/chat/groupList.vue'
+import mainGroup from '../page/chat/mainGroup.vue'
+import createGroup from '../page/chat/createGroup.vue'
 //-------------------
 Vue.use(Router)
 Router.prototype.goBack = function () {
@@ -217,14 +221,33 @@ export default new Router({
                   component: friendList
                 },
                 {
-                  path: 'add', //TODO
+                  path: 'add',
                   name: 'addfriend',
                   component: AddFriend
                 },
                 {
-                  path: 'main', //TODO path
+                  path: 'addGroup',
+                  name: 'addGroup',
+                  component: addGroup
+                },
+                {
+                  path: 'groupList',
+                  name: 'groupList',
+                  component: groupList
+                },
+                {
+                  path: 'createGroup',
+                  name: 'createGroup',
+                  component: createGroup
+                },
+                {
+                  path: 'main',
                   name: 'mainchat',
                   component: MainChat
+                }, {
+                  path: 'mainGroup',
+                  name: 'mainGroup',
+                  component: mainGroup
                 }
               ]
             },

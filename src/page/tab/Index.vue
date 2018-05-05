@@ -1,8 +1,8 @@
 <template>
   <div class="index">
     <header></header>
-    <swiper :list="demo01_list" v-model="demo01_index" @on-index-change="demo01_onIndexChange"
-            @click.native="goNews"></swiper>
+    <swiper :list="baseList" v-model="demo01_index" @on-index-change="demo01_onIndexChange"
+            @click.native="goNews" :loop=true :auto="true" :interval="1000"></swiper>
     <div class="categories">
       <div class="categories-items" @click="goProject('发电厂')">
         <div class="categories-icon" style="background-color:#E03636;">
@@ -127,24 +127,25 @@
   //    }
   //  ]
 
-  const baseList = [
-    {
-      url: 'javascript:',
-      img: './static/img/1.jpg',
-      title: '送你一朵'
-    },
-    {
-      url: 'javascript:',
-      img: './static/img/2.jpg',
-      title: '送你一辆'
-    },
-    {
-      url: 'javascript:',
-      // img: 'https://static.vux.li/demo/5.jpg',
-      title: '送你一次旅行',
-      fallbackImg: './static/img/3.jpg'
-    }
-  ]
+  //  const baseList = [
+  //    {
+  //      url: 'javascript:',
+  //      img: './static/img/1.jpg',
+  ////      img: 'http://39.106.34.156:8080/zs/home/image/banner2.png',
+  //      title: '送你一朵'
+  //    },
+  //    {
+  //      url: 'javascript:',
+  //      img: './static/img/2.jpg',
+  //      title: '送你一辆'
+  //    },
+  //    {
+  //      url: 'javascript:',
+  //      // img: 'https://static.vux.li/demo/5.jpg',
+  //      title: '送你一次旅行',
+  //      fallbackImg: './static/img/3.jpg'
+  //    }
+  //  ]
 
   export default {
     components: {
@@ -155,14 +156,15 @@
     },
     data() {
       return {
-        demo01_list: baseList,
+//        demo01_list: baseList,
         demo01_index: 0,
-        projects: []
+        projects: [],
+        baseList: []
       }
     },
     methods: {
       demo01_onIndexChange(index) {
-        console.log('demo item change', index)
+//        console.log('demo item change', index)
       },
       goProject(type) {
         this.$router.push({
@@ -189,13 +191,33 @@
           {'conditions': {'state': {'searchMethod': 'values', 'values': ['投标中']}}}
         ).then(res => {
 //          console.log('all:' + res.data)
-          this.projects = res.data
+          res.data.forEach((i) => {
+            this.projects.push(i)
+          })
           console.log(this.projects)
+        })
+
+        this.$http.post(this.$domain + '/electric-design/getHomepageCases  '
+        ).then(res => {
+          res.data.forEach(i => {
+            let obj = {
+              url: 'javascript:',
+              img: '',
+              title: ''
+            }
+            obj.img = 'http://39.106.34.156:8080/zs/home' + i.image.substr(1)
+            obj.title = i.name
+            this.baseList.push(obj)
+          })
         })
       }
     },
     mounted() {
       this.initData()
+      this.$one.path = this.$route.path
+      console.log('路径测试')
+      console.log(this.$one.path)
+      this.$one.test(this.$one.path)
     }
   }
 </script>

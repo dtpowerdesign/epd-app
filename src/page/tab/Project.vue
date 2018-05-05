@@ -93,7 +93,12 @@
         })
       }
     },
-    mounted() {}
+    mounted() {
+      this.$one.path = this.$route.path
+      console.log('路径测试')
+      console.log(this.$one.path)
+      this.$one.test(this.$one.path)
+    }
   }
 </script>
 <style scoped>

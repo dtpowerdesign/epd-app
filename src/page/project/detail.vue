@@ -148,6 +148,7 @@
       this.$vux.loading.show({
         text: 'Loading'
       })
+      this.$one.test(this.$route.path)
     }
   }
 </script>

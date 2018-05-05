@@ -1,27 +1,28 @@
 <template>
   <div class="main">
-    <x-header>好友列表</x-header>
+    <x-header>群聊列表</x-header>
     <divider v-show="show">暂无数据</divider>
     <div class="content">
       <div class="friendListDiv" v-for="(i, j) in data" :key="j">
         <div class="friendListDivDiv"><span style="min-width: 30%
-">姓名:</span><span style="word-break: break-all">{{i.name}}</span></div>
+">群名称:</span><span style="word-break: break-all">{{i.groupName}}</span></div>
         <div class="friendListDivDiv"><span style="min-width: 30%
-">账号:</span><span style="word-break: break-all">{{i.account}}</span></div>
+">群账号:</span><span style="word-break: break-all">{{i.groupId}}</span></div>
         <div class="friendListDivDiv"><span style="min-width: 30%
-">账号类型:</span><span style="word-break: break-all">{{i.role}}</span></div>
+">创建者:</span><span style="word-break: break-all">{{i.ownerId}}</span></div>
         <div class="friendListDivDiv"><span style="min-width: 30%
-">工作地点:</span><span style="word-break: break-all">{{i.workingAddress}}</span></div>
+">群介绍:</span><span style="word-break: break-all">{{i.instraction}}</span></div>
         <div class="friendListDivDiv"><span style="min-width: 30%
-">联系电话:</span><span style="word-break: break-all">{{i.telephone}}</span></div>
-        <div class="friendListDivDiv"><span style="min-width: 30%
-">账邮箱号:</span><span style="word-break: break-all">{{i.email}}</span></div>
+">群成员:</span><span style="word-break: break-all">{{i.userIds.join(',')}}</span></div>
         <flexbox>
           <flexbox-item>
-            <x-button @click.native="goChat(i)" type="primary">与他聊天</x-button>
+            <x-button @click.native="goChat(i)" type="primary">进入群聊</x-button>
           </flexbox-item>
           <flexbox-item>
-            <x-button @click.native="myDelete(i.account,i.name)" type="warn">删除好友</x-button>
+            <x-button @click.native="myQuit(i.groupId, i.groupName)" type="warn" v-if="!(i.ownerId === userId)">退出群聊
+            </x-button>
+            <x-button @click.native="myDismiss(i.groupId, i.groupName)" type="warn" v-if="i.ownerId === userId">解散群聊
+            </x-button>
           </flexbox-item>
         </flexbox>
       </div>
@@ -43,12 +44,13 @@
     data() {
       return {
         data: [],
-        show: true
+        show: true,
+        userId: localStorage.getItem('userId')
       }
     },
     methods: {
       initData () {
-        this.$http.post(this.$domain + '/electric-design/getFriendList', {'userId': localStorage.getItem('userId')})
+        this.$http.post(this.$domain + '/electric-design/getAllGroupAboutUser', {'userId': localStorage.getItem('userId')})
           .then((res) => {
             if (res.data.length > 0) {
               this.show = false
@@ -59,11 +61,10 @@
       },
       goChat(i) {
         this.$router.push({
-          path: '/index/chat/main',
+          path: '/index/chat/mainGroup',
           query: {
-            otherName: i.name,
-            otherUserId: i.account,
-            otherNamel: i.name
+            groupName: i.groupName,
+            groupId: i.groupId
           }
         })
       },
@@ -81,6 +82,42 @@
             } else {
               this.$vux.toast.show({
                 text: `删除好友${name}失败,原因:${res.data.reason}`
+              })
+            }
+          })
+      },
+      myQuit (account, name) {
+        this.$http.post(this.$domain + '/electric-design/quit', {
+          'userIds': [localStorage.getItem('userId')],
+          'groupId': account
+        })
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.$vux.toast.show({
+                text: `成功退出群${name}`
+              })
+              this.initData()
+            } else {
+              this.$vux.toast.show({
+                text: `退出群${name}失败,原因:${res.data.code}`
+              })
+            }
+          })
+      },
+      myDismiss (account, name) {
+        this.$http.post(this.$domain + '/electric-design/dismiss', {
+          'userIds': [localStorage.getItem('userId')],
+          'groupId': account
+        })
+          .then((res) => {
+            if (res.data.code === 200) {
+              this.$vux.toast.show({
+                text: `成功解散群${name}`
+              })
+              this.initData()
+            } else {
+              this.$vux.toast.show({
+                text: `解散群${name}失败,原因:${res.data.code}`
               })
             }
           })

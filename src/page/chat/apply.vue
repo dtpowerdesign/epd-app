@@ -29,9 +29,13 @@
       <div v-for="(item, i) in List2" class="list">
         <p class="list-content" v-if="item.applyType === 'normal'" style="color: #0000ff">申请添加好友</p>
         <p class="list-content" v-if="item.applyType === 'group'" style="color: #0000ff">申请加入群</p>
-        <p class="list-content">姓名：{{item.toName}}</p>
-        <p class="list-content">账号：{{item.toUserId}}</p>
-        <p class="list-content">验证消息：{{item.extraMsg}}</p>
+        <p class="list-content" v-if="item.applyType === 'normal'">姓名：{{item.toName}}</p>
+        <p class="list-content" v-if="item.applyType === 'normal'">账号：{{item.toUserId}}</p>
+        <p class="list-content" v-if="item.applyType === 'normal'">验证消息：{{item.extraMsg}}</p>
+        <p class="list-content" v-if="item.applyType === 'group'">群名称：{{item.toName}}</p>
+        <p class="list-content" v-if="item.applyType === 'group'">群ID：{{item.toGroupId}}</p>
+        <p class="list-content" v-if="item.applyType === 'group'">验证消息：{{item.extraMsg}}</p>
+
         <div class="list-state" v-if="item.ApplyState === 'agreed'" style="background-color: #24ff76;color:white;">
           已同意
         </div>
@@ -223,12 +227,14 @@
             this.List1.reverse()
             this.List2.reverse()
             console.log(this.List1)
+            console.log('-----------------------')
             console.log(this.List2)
           })
       }
     },
     mounted() {
       this.initData()
+      this.$one.test(this.$route.path)
     }
   }
 </script>

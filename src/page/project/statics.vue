@@ -13,6 +13,9 @@ export default {
     goback() {
       this.$router.goBack()
     }
+  },
+  mounted() {
+    this.$one.test(this.$route.path)
   }
 }
 </script>

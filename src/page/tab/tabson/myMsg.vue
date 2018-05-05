@@ -75,6 +75,7 @@
     },
     mounted() {
       this.initData()
+      this.$one.test(this.$route.path)
     },
     computed: {
       realsex() {

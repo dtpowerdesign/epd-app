@@ -3,10 +3,13 @@
     <x-header>查看投标信息</x-header>
     <div class="content">
       <divider>个体投标</divider>
-      <div class="perbid" v-for="(i,j) in perBid" :key="j" v-if="i.srcUserType==='puser'&&i.bidType==='personal'">
-        <p><span>投标人账号：</span><span>{{i.srcUserAccount}}</span></p>
-        <p><span>投标人姓名：</span><span>{{i.srcUserName}}</span></p>
-        <p><span>投标描述：</span><span>{{i.bidInstruction}}</span></p>
+      <div class="perbid" v-for="(i,j) in perBid" :key="j" v-if="i.sourceUserType==='puser'&&i.bidType ==='personal' && i.bidState!=='cancel'">
+        <p><span>投标企业账号：</span><span>{{i.sourceUserId  }}</span></p>
+        <p><span>投标企业名称：</span><span>{{i.sourceUserName  }}</span></p>
+        <p><span>投标报价：</span><span>{{i.bidfjxx.price  }}</span></p>
+        <p><span>工期：</span><span>{{i.bidfjxx.time  }}</span></p>
+        <p><span>业绩：</span><span>{{i.bidfjxx.performance  }}</span></p>
+        <p><span>资质：</span><span>{{i.bidfjxx.aptitude  }}</span></p>
         <p v-for="file in i.upDatas" style="position: relative;margin-top: 10px;">
           <span>投标附件：</span><span>{{file.dataName}}</span>
           <span><x-button type="primary" style="display: inline-block;position: absolute;right: 30px;" mini
@@ -15,10 +18,13 @@
       </div>
 
       <divider>企业投标</divider>
-      <div class="perbid" v-for="(i,j) in perBid" :key="j" v-if="i.srcUserType==='cuser'&&i.bidType==='personal'">
-        <p><span>投标企业账号：</span><span>{{i.srcUserAccount}}</span></p>
-        <p><span>投标企业名称：</span><span>{{i.srcUserName}}</span></p>
-        <p><span>投标描述：</span><span>{{i.bidInstruction}}</span></p>
+      <div class="perbid" v-for="(i,j) in perBid" :key="j" v-if="i.sourceUserType ==='cuser'&&i.bidType ==='personal' && i.bidState!=='cancel'">
+        <p><span>投标企业账号：</span><span>{{i.sourceUserId  }}</span></p>
+        <p><span>投标企业名称：</span><span>{{i.sourceUserName  }}</span></p>
+        <p><span>投标报价：</span><span>{{i.bidfjxx.price  }}</span></p>
+        <p><span>工期：</span><span>{{i.bidfjxx.time  }}</span></p>
+        <p><span>业绩：</span><span>{{i.bidfjxx.performance  }}</span></p>
+        <p><span>资质：</span><span>{{i.bidfjxx.aptitude  }}</span></p>
         <p v-for="file in i.upDatas" style="position: relative;margin-top: 10px;">
           <span>投标附件：</span><span>{{file.dataName}}</span>
           <span><x-button type="primary" style="display: inline-block;position: absolute;right: 30px;" mini
@@ -27,11 +33,13 @@
       </div>
 
       <divider>联合体投标</divider>
-      <div class="perbid" v-for="(i,j) in perBid" :key="j" v-if="i.bidType==='unit'">
-        <p><span>投标投标账号：</span><span>{{i.srcUserAccount}}</span></p>
-        <p><span>投标投标姓名：</span><span>{{i.srcUserName}}</span></p>
-        <p><span>投标人类型：</span><span>{{formatType(i.srcUserType)}}</span></p>
-        <p><span>投标描述：</span><span>{{i.bidInstruction}}</span></p>
+      <div class="perbid" v-for="(i,j) in perBid" :key="j" v-if="i.bidType ==='unit' && i.bidState!=='cancel'">
+        <p><span>投标企业账号：</span><span>{{i.sourceUserId  }}</span></p>
+        <p><span>投标企业名称：</span><span>{{i.sourceUserName  }}</span></p>
+        <p><span>投标报价：</span><span>{{i.bidfjxx.price  }}</span></p>
+        <p><span>工期：</span><span>{{i.bidfjxx.time  }}</span></p>
+        <p><span>业绩：</span><span>{{i.bidfjxx.performance  }}</span></p>
+        <p><span>资质：</span><span>{{i.bidfjxx.aptitude  }}</span></p>
         <p v-for="file in i.upDatas" style="position: relative;margin-top: 10px;">
           <span>投标附件：</span><span>{{file.dataName}}</span>
           <span><x-button type="primary" style="display: inline-block;position: absolute;right: 30px;" mini
@@ -71,7 +79,7 @@
       },
       initData() {
         this.$http.post(this.$domain + '/electric-design/getMultRecordByKeysAndValues', {
-          'table': 'bidrecord',
+          'table': 'biders',
           'keys': ['belongToProjectCode'],
           'values': [this.$route.query.code]
         })
@@ -86,6 +94,7 @@
     },
     mounted() {
       this.initData()
+      this.$one.test(this.$route.path)
     }
   }
 </script>

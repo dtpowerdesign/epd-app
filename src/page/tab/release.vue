@@ -1,21 +1,16 @@
 <template>
   <div class="main">
     <x-header class="header" title="发布任务" :left-options="{showBack: false}"></x-header>
-    <!--<group >-->
-    <!--<x-input title="任务名称"></x-input>-->
-    <!--</group>-->
-    <!--<group title="任务地点">-->
-    <!--<x-address title="地点" :list="addressData"></x-address>-->
-    <!--</group>-->
-    <!--<group title="详细描述">-->
-    <!--<x-textarea :max="200" placeholder="详细描述" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>-->
-    <!--</group>-->
-    <div class="content">
+    <p style="margin-left: 13px;color: #c8c7cd">任务类型</p>
+    <radio title="任务类型" :options="projectType" v-model="form.dataOrProject"></radio>
+    <!--{{form.dataOrProject}}-->
+
+    <div class="content" v-if="form.dataOrProject === '项目任务'">
       <group>
         <group-title solt="title" class="title">任务基本信息</group-title>
         <x-input title="项目名称" v-model="form.name"></x-input>
         <x-switch title="是否接受联合投标" v-model="form.isAcceptJointBid"></x-switch>
-        <x-input title="招标公司" v-model="form.company"></x-input>
+        <x-input title="发布公司" v-model="form.company"></x-input>
         <selector title="类别" :options="categorys" v-model="form.categorys"></selector>
         <divider>关于投标</divider>
         <x-switch title="发布完是否立即投标" v-model="form.state"></x-switch>
@@ -26,9 +21,9 @@
         <!--{{form.designState[0]}}-->
         <checklist title="委托设计阶段" :options="designState" v-model="form.designState"
                    @click.native="changeState"></checklist>
-        {{form.designState}}
         <checklist title="类型" :options="type" v-model="form.type"></checklist>
-        <checklist title="涉及专业" :options="major" v-model="form.major"></checklist>
+        <p style="font-size: 14px;color:#8c8b91;margin-left: 15px;">涉及专业</p>
+        <checklist :options="major" v-model="form.major" style="height: 240px;overflow: auto"></checklist>
         <divider>电压等级</divider>
         <selector title="电压类型" :options="voltagetype" v-model="form.voltagelevel1"></selector>
         <x-input title="电压大小" v-model="form.voltagelevel2" type="number"></x-input>
@@ -96,6 +91,47 @@
         </flexbox-item>
       </flexbox>
     </div>
+
+    <div class="content" v-if="form.dataOrProject === '资料任务'">
+      <group>
+        <group-title solt="title" class="title">任务基本信息</group-title>
+        <x-input title="项目名称" v-model="form.name"></x-input>
+        <x-input title="发布公司" v-model="form.company"></x-input>
+        <selector title="类别" :options="categorys" v-model="form.categorys"></selector>
+        <divider>关于投标</divider>
+        <x-switch title="发布完是否立即投标" v-model="form.state"></x-switch>
+        <hr>
+        <!--<selector title="设计阶段" :options="designState" v-model="form.designState[0]"></selector>-->
+        <!--{{form.designState[0]}}-->
+        <checklist title="类型" :options="type" v-model="form.type"></checklist>
+        <p style="font-size: 14px;color:#8c8b91;margin-left: 15px;">涉及专业</p>
+        <checklist :options="major" v-model="form.major" style="height: 240px;overflow: auto"></checklist>
+        <datetime title="开始时间" v-model="form.startTime"></datetime>
+        <datetime title="结束时间" v-model="form.endTime"></datetime>
+        <divider>详细描述</divider>
+        <x-textarea :height="100" :max="300" v-model="form.instruction"></x-textarea>
+        <divider>项目要求</divider>
+        <x-textarea :height="100" :max="300" v-model="form.requirement"></x-textarea>
+      </group>
+
+      <group>
+        <group-title solt="title" class="title">付款相关</group-title>
+        <selector title="付款方式" :options="paymentMethods" v-model="form.paymentMethods"></selector>
+        <x-input title="付款比例" v-model="form.paymentScale"></x-input>
+        <x-switch title="是否有发票" v-model="form.hasInvoice"></x-switch>
+        <divider>付款描述</divider>
+        <x-textarea :max="300" :height="100" v-model="form.payDiscible"></x-textarea>
+      </group>
+
+      <flexbox>
+        <flexbox-item>
+          <x-button type="primary" @click.native="submit">发布</x-button>
+        </flexbox-item>
+        <flexbox-item>
+          <x-button type="warn" @click.native="reset">重置</x-button>
+        </flexbox-item>
+      </flexbox>
+    </div>
   </div>
 </template>
 <script>
@@ -117,7 +153,8 @@
     Datetime,
     GroupTitle,
     Checklist,
-    Alert
+    Alert,
+    Radio
   } from 'vux'
   export default {
     components: {
@@ -137,10 +174,12 @@
       Datetime,
       GroupTitle,
       Checklist,
-      Alert
+      Alert,
+      Radio
     },
     data() {
       return {
+        projectType: ['项目任务', '资料任务'],
         stateCount: 1,
         addressData: ChinaAddressV4Data,
         stepName: ['身份选择', '填写项目信息', '最终确认'],
@@ -149,7 +188,7 @@
         description: ['发布新项目前选择您的身份，方便项目的填写，若您对表单不了解，会由工作人员协同您填写', '在此页面填写与项目有关的基本信息,方便设计人员了解您的项目，有利于项目的进行', '最后确认您的项目信息，点击确认即可发布', '步骤四的说明', '步骤五的说明', '步骤六的说明'],
         radioStep1: '',
         form: {
-          dataOrProject: 'project',
+          dataOrProject: '项目任务',
           company: '某某公司',
           name: '项目',
           state: false,
@@ -189,7 +228,8 @@
         unit: ['MW', 'Kva', 'KV', `M^2`],
         existingData: {detail: ''},
         states: [{'value': '发布中', 'label': '发布完不立即招标'}, {'value': '投标中', 'label': '发布完直接招标'}],
-        major: ['计算机', '电力', '岩土', '绘测'],
+        major: ['岩土', '测量', '总图', '锅炉', '除灰', '热机', '管道', '热控', '机械', '运煤', '水工结构', '水工工艺', '电气一次', '电气二次', '通信', '建筑', '结构', '道路', '给排水', '暖通', '环评、水保', '消防', '土建造价', '电气造价', '线路电气', '线路结构', '电缆线路设计', '系统', '钢结构', '线路铁塔计算', '线路钢管杆计算'],
+//        major: ['计算机', '电力', '岩土', '绘测'],
         designState: ['前期', '项目建议书', '可行性研究报告', '招投标', '初步设计', '施工图设计', '竣工图编制'],
         sizeAndCapacitys: ['MW', 'KW', 'kVA'],
         categorys: ['火电', '水电', '风电', '光伏', '核电', '储能', '电气设备', '充电桩', '工业民用建筑'],
@@ -246,11 +286,12 @@
         this.form.performanceReq1 = this.form.performanceReq1 === true ? '' : this.form.performanceReq1
         this.form.paymentMethods = this.form.paymentMethods === true ? '' : this.form.paymentMethods
         this.form.hasInvoice = this.form.hasInvoice === true ? 'yes' : this.form.hasInvoice
+        this.form.dataOrProject = this.form.dataOrProject === '项目任务' ? 'project' : 'data'
         console.log('data:test:' + this.form.categorys)
         var data = {
           'sourceAccount': localStorage.getItem('userId'),
           'releaseUserAccount': localStorage.getItem('userId'),
-          'dataOrProject': 'project',
+          'dataOrProject': this.form.dataOrProject,
           'tenderCompany': this.form.company,
           'name': this.form.name,
           'changeName': this.form.name,
@@ -338,6 +379,11 @@
           content: '重置成功！'
         })
       }
+    },
+    mounted() {
+      this.$one.path = this.$route.path
+      console.log('路径测试')
+      console.log(this.$one.path)
     }
   }
 </script>
@@ -368,7 +414,7 @@
   }
 
   .content {
-    height: 80%;
+    height: 70%;
     overflow: scroll;
   }
 

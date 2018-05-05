@@ -5,14 +5,43 @@
 </template>
 
 <script>
+  import { Toast } from 'vux'
   export default {
+    components: {
+      Toast
+    },
     name: 'app',
     mounted() {
       this.$nextTick(() => {
         this.$startInit(localStorage.getItem('userId'), {token: JSON.parse(localStorage.getItem('userMsg')).token})
       })
       this.$one.$on('hasApply', (message) => {
-        console.log('hasApply')
+        this.$vux.toast.show({
+          type: 'text',
+          text: '收到申请消息',
+          time: 3000,
+          position: 'top'
+        })
+//        console.log('申请')
+        console.log(message)
+      })
+      this.$one.$on('has', (message) => {
+        if (JSON.parse(message.content.extra).type === 'normal') {
+          this.$vux.toast.show({
+            type: 'text',
+            text: `来自${JSON.parse(message.content.extra).otherName}的私聊信息`,
+            time: 3000,
+            position: 'top'
+          })
+        }
+        if (JSON.parse(message.content.extra).type === 'group') {
+          this.$vux.toast.show({
+            type: 'text',
+            text: `来自${JSON.parse(message.content.extra).otherName}的群信息`,
+            time: 3000,
+            position: 'top'
+          })
+        }
       })
     }
   }

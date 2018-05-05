@@ -8,6 +8,8 @@ import router from './router/index'
 import 'animate.css'
 import { LoadingPlugin, ToastPlugin } from 'vux'
 import Axios from 'axios'
+// let apply = '0'
+// Vue.prototype.$apply = apply
 
 FastClick.attach(document.body)
 
@@ -44,7 +46,33 @@ const store = new Vuex.Store({
 var bus = new Vue({
   store,
   data: {
-    people: []
+    people: [],
+    path: ''
+  },
+  methods: {
+    test(path) {
+      // function btn () {
+      let webview = window.plus.webview.currentWebview()
+      function ev () {
+        webview.canBack(function (e) {
+          if (e.canBack) {
+            if (path === '/index/all' || path === '/index/project' || path === '/index/release' || path === '/index/chat' || path === '/index/profile' || path === '/' || path === '/signin' || path === '/register_1' || path === '/register_2') {
+              webview.close()
+            } else {
+              webview.back()
+            }
+          } else {
+            webview.close()//hide,quit
+          }
+        })
+      }
+      window.plus.key.removeEventListener('backbutton', ev)
+      window.plus.key.addEventListener('backbutton', ev)
+      // }
+
+      // document.removeEventListener('plusready', btn)
+      // document.addEventListener('plusready', btn)
+    }
   }
 })
 Vue.prototype.$one = bus
@@ -234,3 +262,42 @@ function init (params, callbacks, modules) {
 }
 //物理返回键设置
 //设备返回键//TODO
+// document.addEventListener('plusready', function () {
+//   var webview = window.plus.webview.currentWebview()
+//   window.plus.key.addEventListener('backbutton', function () {
+//     webview.canBack(function (e) {
+//       if (e.canBack) {
+//         // webview.back()
+//         //this.$one.data.path === '/index/all' || this.$one.data.path === '/index/project' || this.$one.data.path === '/index/release' || this.$one.data.path === '/index/chat' || this.$one.data.path === '/index/profile'
+//         // let a = '/index/all'
+//         if (bus.data === '/index/all') {
+//           webview.close()
+//         } else {
+//           webview.back()
+//         }
+//       } else {
+//         webview.close()//hide,quit
+//         //plus.runtime.quit();
+//         // mui.plusReady(function () {
+//         //   //首页返回键处理
+//         //   //处理逻辑：1秒内，连续两次按返回键，则退出应用；
+//         //   var first = null
+//         //   plus.key.addEventListener('backbutton', function () {
+//         //     //首次按键，提示‘再按一次退出应用’
+//         //     if (!first) {
+//         //       first = new Date().getTime()
+//         //       mui.toast('再按一次退出应用')
+//         //       setTimeout(function () {
+//         //         first = null
+//         //       }, 1000)
+//         //     } else {
+//         //       if (new Date().getTime() - first < 1500) {
+//         //         plus.runtime.quit()
+//         //       }
+//         //     }
+//         //   }, false)
+//         // })
+//       }
+//     })
+//   })
+// })

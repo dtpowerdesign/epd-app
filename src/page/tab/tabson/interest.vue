@@ -43,6 +43,9 @@
           '成套报价6'
         ]
       }
+    },
+    mounted() {
+      this.$one.test(this.$route.path)
     }
   }
 </script>
